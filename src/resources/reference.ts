@@ -2,7 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { KaitoClient } from "../client.js";
 
 export function registerResources(server: McpServer, client: KaitoClient) {
-  server.resource(
+  server.registerResource(
     "tokens",
     "kaito://tokens",
     {
@@ -24,7 +24,7 @@ export function registerResources(server: McpServer, client: KaitoClient) {
     },
   );
 
-  server.resource(
+  server.registerResource(
     "narratives",
     "kaito://narratives",
     {

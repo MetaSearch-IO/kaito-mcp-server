@@ -2,15 +2,18 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
 export function registerPrompts(server: McpServer) {
-  server.prompt(
+  server.registerPrompt(
     "analyze_token",
-    "Comprehensive analysis of a crypto token: sentiment, mindshare, mentions, engagement, events, and recent news.",
     {
-      token: z.string().describe("Token ticker (e.g. BTC, ETH)"),
-      days: z
-        .string()
-        .optional()
-        .describe("Number of days to look back (default: 30)"),
+      description:
+        "Comprehensive analysis of a crypto token: sentiment, mindshare, mentions, engagement, events, and recent news.",
+      argsSchema: {
+        token: z.string().describe("Token ticker (e.g. BTC, ETH)"),
+        days: z
+          .string()
+          .optional()
+          .describe("Number of days to look back (default: 30)"),
+      },
     },
     ({ token, days }) => {
       const lookback = days || "30";
@@ -42,14 +45,17 @@ After gathering all data, provide a structured analysis covering:
     },
   );
 
-  server.prompt(
+  server.registerPrompt(
     "discover_trending",
-    "Discover trending crypto projects and narratives using mindshare rankings and recent content.",
     {
-      duration: z
-        .string()
-        .optional()
-        .describe("Time window for rankings: 24h, 7d, 30d (default: 24h)"),
+      description:
+        "Discover trending crypto projects and narratives using mindshare rankings and recent content.",
+      argsSchema: {
+        duration: z
+          .string()
+          .optional()
+          .describe("Time window for rankings: 24h, 7d, 30d (default: 24h)"),
+      },
     },
     ({ duration }) => {
       const window = duration || "24h";
