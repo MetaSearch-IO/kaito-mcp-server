@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
   release:
@@ -62,6 +63,16 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to GitHub Packages
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          jq '.name = "@metasearch-io/kaito-mcp-server"' package.json > package.tmp && mv package.tmp package.json
+          npm config set //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"
+          npm publish --access public --registry https://npm.pkg.github.com
+          git checkout package.json
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: Create tag and GitHub Release
         if: steps.check.outputs.exists == 'false'
