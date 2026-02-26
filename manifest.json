@@ -19,7 +19,9 @@
     "entry_point": "build/index.js",
     "mcp_config": {
       "command": "node",
-      "args": ["${__dirname}/build/index.js"],
+      "args": [
+        "${__dirname}/build/index.js"
+      ],
       "env": {
         "KAITO_API_KEY": "${user_config.api_key}"
       }
@@ -35,22 +37,65 @@
     }
   },
   "tools": [
-    { "name": "kaito_sentiment", "description": "Daily sentiment time series for a token" },
-    { "name": "kaito_mindshare", "description": "Daily mindshare time series for a token" },
-    { "name": "kaito_narrative_mindshare", "description": "Daily mindshare for a crypto narrative" },
-    { "name": "kaito_mentions", "description": "Daily mention counts by source" },
-    { "name": "kaito_engagement", "description": "Daily engagement metrics" },
-    { "name": "kaito_advanced_search", "description": "Ranked crypto feeds with AI summaries" },
-    { "name": "kaito_smart_followers", "description": "Smart follower data for a Twitter user" },
-    { "name": "kaito_smart_following", "description": "Smart accounts followed by a user" },
-    { "name": "kaito_reciprocal_followers", "description": "Mutual followers sorted by smart follower count" },
-    { "name": "kaito_mindshare_arena", "description": "Project rankings by mindshare" },
-    { "name": "kaito_pre_tge_arena", "description": "Pre-TGE project rankings" },
-    { "name": "kaito_events", "description": "Upcoming catalyst events for a token" },
-    { "name": "kaito_tweet_engagement_info", "description": "Engagement details for a tweet" }
+    {
+      "name": "kaito_sentiment",
+      "description": "Daily sentiment time series for a token"
+    },
+    {
+      "name": "kaito_mindshare",
+      "description": "Daily mindshare time series for a token"
+    },
+    {
+      "name": "kaito_narrative_mindshare",
+      "description": "Daily mindshare for a crypto narrative"
+    },
+    {
+      "name": "kaito_mentions",
+      "description": "Daily mention counts by source"
+    },
+    {
+      "name": "kaito_engagement",
+      "description": "Daily engagement metrics"
+    },
+    {
+      "name": "kaito_advanced_search",
+      "description": "Ranked crypto feeds with AI summaries"
+    },
+    {
+      "name": "kaito_smart_followers",
+      "description": "Smart follower data for a Twitter user"
+    },
+    {
+      "name": "kaito_smart_following",
+      "description": "Smart accounts followed by a user"
+    },
+    {
+      "name": "kaito_reciprocal_followers",
+      "description": "Mutual followers sorted by smart follower count"
+    },
+    {
+      "name": "kaito_mindshare_arena",
+      "description": "Project rankings by mindshare"
+    },
+    {
+      "name": "kaito_pre_tge_arena",
+      "description": "Pre-TGE project rankings"
+    },
+    {
+      "name": "kaito_events",
+      "description": "Upcoming catalyst events for a token"
+    },
+    {
+      "name": "kaito_tweet_engagement_info",
+      "description": "Engagement details for a tweet"
+    }
   ],
   "compatibility": {
-    "platforms": ["darwin", "win32", "linux"],
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
     "runtimes": {
       "node": ">=18.0.0"
     }
