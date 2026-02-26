@@ -21,9 +21,9 @@ export function registerRankingsTools(server: McpServer, client: KaitoClient) {
         .optional()
         .describe("Language filter (default: all)"),
       categories: z
-        .string()
+        .enum(["EXCHANGE", "INFOMKT"])
         .optional()
-        .describe("Comma-separated categories (e.g. L1,DEFI). Case-insensitive."),
+        .describe("Category filter: EXCHANGE or INFOMKT"),
       pre_tge: z
         .boolean()
         .optional()
