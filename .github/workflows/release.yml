@@ -25,6 +25,15 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
 
+      - name: Verify package.json and manifest.json versions match
+        run: |
+          PKG_VERSION=$(jq -r .version package.json)
+          MANIFEST_VERSION=$(jq -r .version manifest.json)
+          if [ "$PKG_VERSION" != "$MANIFEST_VERSION" ]; then
+            echo "::error::Version mismatch: package.json=$PKG_VERSION, manifest.json=$MANIFEST_VERSION"
+            exit 1
+          fi
+
       - name: Check if release already exists
         id: check
         run: |
