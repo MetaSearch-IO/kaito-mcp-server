@@ -13,7 +13,9 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "preversion": "npm run build",
+    "postversion": "node scripts/sync-manifest-version.js && git add manifest.json && git commit --amend --no-edit && git push && git push --tags"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.0",
