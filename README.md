@@ -4,7 +4,11 @@ MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Prov
 
 ## Quick Start
 
-### Claude Desktop
+### Claude Desktop (one-click)
+
+Download the latest [kaito-mcp-server.mcpb](https://github.com/MetaSearch-IO/kaito-mcp-server/releases/latest/download/kaito-mcp-server.mcpb) and open it — Claude Desktop will handle the rest.
+
+### Claude Desktop (manual)
 
 Add to your `claude_desktop_config.json`:
 
