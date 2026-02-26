@@ -2,8 +2,9 @@ name: Release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: [main]
+    paths:
+      - manifest.json
 
 permissions:
   contents: write
@@ -13,26 +14,60 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version from manifest
+        id: version
+        run: |
+          VERSION=$(jq -r .version manifest.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check if release already exists
+        id: check
+        run: |
+          if gh release view "${{ steps.version.outputs.tag }}" &>/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Skip if already released
+        if: steps.check.outputs.exists == 'true'
+        run: echo "Release ${{ steps.version.outputs.tag }} already exists, skipping." && exit 0
 
       - uses: actions/setup-node@v4
+        if: steps.check.outputs.exists == 'false'
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
-      - run: npm ci
-      - run: npm run build
+      - if: steps.check.outputs.exists == 'false'
+        run: npm ci
+
+      - if: steps.check.outputs.exists == 'false'
+        run: npm run build
 
       - name: Pack MCPB bundle
+        if: steps.check.outputs.exists == 'false'
         run: |
           npm install -g @anthropic-ai/mcpb
           mcpb pack . kaito-mcp-server.mcpb
 
       - name: Publish to npm
+        if: steps.check.outputs.exists == 'false'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create GitHub Release
-        run: gh release create "${{ github.ref_name }}" kaito-mcp-server.mcpb --generate-notes
+      - name: Create tag and GitHub Release
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          git tag "${{ steps.version.outputs.tag }}"
+          git push origin "${{ steps.version.outputs.tag }}"
+          gh release create "${{ steps.version.outputs.tag }}" kaito-mcp-server.mcpb --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
