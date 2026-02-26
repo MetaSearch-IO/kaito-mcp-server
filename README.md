@@ -8,6 +8,9 @@ MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Prov
 
 Add to your `claude_desktop_config.json`:
 
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
 ```jsonc
 {
   "mcpServers": {
