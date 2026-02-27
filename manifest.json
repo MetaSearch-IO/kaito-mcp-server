@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "kaito-mcp-server",
   "display_name": "Kaito AI",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Crypto market intelligence from Kaito AI — sentiment, mindshare, social analytics, rankings, and more.",
   "author": {
     "name": "MetaSearch",
