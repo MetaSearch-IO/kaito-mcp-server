@@ -74,10 +74,6 @@
       "description": "Project rankings by mindshare"
     },
     {
-      "name": "kaito_pre_tge_arena",
-      "description": "Pre-TGE project rankings"
-    },
-    {
       "name": "kaito_events",
       "description": "Upcoming catalyst events for a token"
     },

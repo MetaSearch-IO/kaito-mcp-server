@@ -7,7 +7,7 @@ export function registerRankingsTools(server: McpServer, client: KaitoClient) {
     "kaito_mindshare_arena",
     {
       description:
-        "Get project rankings by mindshare score, with optional category and time window filters. Returns up to 100 projects sorted by mindshare. TIP: Set pre_tge=true to discover trending new projects that haven't launched a token yet.",
+        "Get project rankings by mindshare score, with optional category and time window filters. Returns up to 100 projects sorted by mindshare. To get Pre-TGE (pre-token generation event) rankings, set pre_tge=true without categories — this returns the same results as a dedicated pre-TGE arena view.",
       inputSchema: {
         duration: z
           .enum(["all", "24h", "48h", "7d", "30d", "3m", "6m", "12m"])
@@ -54,29 +54,4 @@ export function registerRankingsTools(server: McpServer, client: KaitoClient) {
     },
   );
 
-  server.registerTool(
-    "kaito_pre_tge_arena",
-    {
-      description:
-        "Get Pre-TGE (pre-token generation event) project rankings by mindshare. Returns up to 100 projects. Use this to discover trending new projects that haven't launched a token yet.",
-      inputSchema: {
-        window: z
-          .enum(["all", "24h", "48h", "7d", "30d", "3m", "6m", "12m"])
-          .optional()
-          .describe("Time window (default: 24h)"),
-        language: z
-          .enum(["all", "en", "zh", "others"])
-          .optional()
-          .describe("Language filter (default: all)"),
-      },
-      annotations: { readOnlyHint: true, openWorldHint: true },
-    },
-    async ({ window, language }) => {
-      const data = await client.request("pre_tge_arena", {
-        window,
-        language,
-      });
-      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
-    },
-  );
 }

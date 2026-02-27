@@ -1,6 +1,6 @@
 # kaito-mcp-server
 
-MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides 13 tools, 2 resources, and 2 prompt templates for accessing Kaito's sentiment analysis, mindshare tracking, social intelligence, and more.
+MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides 12 tools, 2 resources, and 2 prompt templates for accessing Kaito's sentiment analysis, mindshare tracking, social intelligence, and more.
 
 ## Getting Started
 
@@ -104,8 +104,7 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 
 | Tool | Description |
 |------|-------------|
-| `kaito_mindshare_arena` | Project rankings by mindshare |
-| `kaito_pre_tge_arena` | Pre-TGE project rankings by mindshare |
+| `kaito_mindshare_arena` | Project rankings by mindshare (use `pre_tge=true` for Pre-TGE rankings) |
 
 ### Events
 
@@ -126,7 +125,7 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 | Prompt | Description |
 |--------|-------------|
 | `analyze_token` | Comprehensive token analysis workflow (sentiment → mindshare → mentions → engagement → events → search) |
-| `discover_trending` | Trending discovery workflow (mindshare arena → pre-TGE arena → search) |
+| `discover_trending` | Trending discovery workflow (mindshare arena → search) |
 
 ## Development
 

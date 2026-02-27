@@ -68,7 +68,7 @@ After gathering all data, provide a structured analysis covering:
               text: `Discover what's trending in crypto right now using a ${window} time window. Follow these steps:
 
 1. **Mindshare Arena**: Call kaito_mindshare_arena with duration=${window} to see top projects by mindshare.
-2. **Pre-TGE Arena**: Call kaito_pre_tge_arena with window=${window} to find trending pre-token projects.
+2. **Pre-TGE Arena**: Call kaito_mindshare_arena with duration=${window}, pre_tge=true to find trending pre-token projects.
 3. **Trending Content**: Call kaito_advanced_search in discovery mode (no tokens/keyword) to see what's trending.
 
 After gathering all data, provide:
