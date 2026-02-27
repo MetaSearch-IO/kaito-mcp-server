@@ -50,7 +50,7 @@ npm version major    # e.g. 0.1.5 → 1.0.0
 What happens under the hood:
 1. `preversion` — runs `npm run build` to verify compilation
 2. `npm version` — updates `package.json`, creates commit & tag
-3. `postversion` — syncs version to `manifest.json`, amends commit, pushes with tags
+3. `postversion` — syncs version to `manifest.json`, amends commit, pushes (tags stay local)
 
 **Never edit version numbers manually.** Always use `npm version`.
 
