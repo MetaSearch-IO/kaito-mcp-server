@@ -2,20 +2,15 @@
 
 MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides 13 tools, 2 resources, and 2 prompt templates for accessing Kaito's sentiment analysis, mindshare tracking, social intelligence, and more.
 
-## Quick Start
+## Getting Started
 
-### Claude Desktop (one-click)
+All configurations require a [Kaito API key](https://kaito.ai). Set it as the `KAITO_API_KEY` environment variable.
 
-Download the latest [kaito-mcp-server.mcpb](https://github.com/MetaSearch-IO/kaito-mcp-server/releases/latest/download/kaito-mcp-server.mcpb) and open it — Claude Desktop will handle the rest.
+### Standard configuration
 
-### Claude Desktop (manual)
+The following config works across most MCP clients (Claude Desktop, Cursor, Windsurf, etc.):
 
-Add to your `claude_desktop_config.json`:
-
-- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-
-```jsonc
+```json
 {
   "mcpServers": {
     "kaito": {
@@ -29,13 +24,56 @@ Add to your `claude_desktop_config.json`:
 }
 ```
 
+### Claude Desktop (one-click)
+
+Download the latest [kaito-mcp-server.mcpb](https://github.com/MetaSearch-IO/kaito-mcp-server/releases/latest/download/kaito-mcp-server.mcpb) and open it — Claude Desktop will handle the rest.
+
+### Claude Desktop (manual)
+
+Add the [standard config](#standard-configuration) to your `claude_desktop_config.json`:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
 ### Claude Code
 
 ```bash
-claude mcp add kaito -- npx -y kaito-mcp-server
+claude mcp add kaito -e KAITO_API_KEY=your-api-key -- npx -y kaito-mcp-server
 ```
 
-Set the environment variable `KAITO_API_KEY` before launching.
+### VS Code
+
+Add the following to your User Settings (JSON) or `.vscode/settings.json`:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "kaito": {
+        "command": "npx",
+        "args": ["-y", "kaito-mcp-server"],
+        "env": {
+          "KAITO_API_KEY": "your-api-key"
+        }
+      }
+    }
+  }
+}
+```
+
+### Cursor
+
+Go to **Cursor Settings → MCP → Add new MCP Server**, and paste the [standard config](#standard-configuration).
+
+### Other MCP Clients
+
+For any MCP-compatible client, the server can be started with:
+
+```bash
+KAITO_API_KEY=your-api-key npx -y kaito-mcp-server
+```
+
+The transport is **stdio**. Use this command in your client's MCP server configuration.
 
 ## Tools
 
