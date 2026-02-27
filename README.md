@@ -99,7 +99,6 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 |------|-------------|
 | `kaito_smart_followers` | Smart follower count or list for a user |
 | `kaito_smart_following` | Latest 100 smart accounts followed by a user |
-| `kaito_reciprocal_followers` | Mutual followers sorted by smart follower count |
 
 ### Rankings
 

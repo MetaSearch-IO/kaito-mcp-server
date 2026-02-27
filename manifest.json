@@ -70,10 +70,6 @@
       "description": "Smart accounts followed by a user"
     },
     {
-      "name": "kaito_reciprocal_followers",
-      "description": "Mutual followers sorted by smart follower count"
-    },
-    {
       "name": "kaito_mindshare_arena",
       "description": "Project rankings by mindshare"
     },

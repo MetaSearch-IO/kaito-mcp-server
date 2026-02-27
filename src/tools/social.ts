@@ -69,30 +69,4 @@ export function registerSocialTools(server: McpServer, client: KaitoClient) {
       return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
     },
   );
-
-  server.registerTool(
-    "kaito_reciprocal_followers",
-    {
-      description:
-        "Get reciprocal (mutual) followers for a Twitter user, sorted by smart follower count descending.",
-      inputSchema: {
-        user_id: z
-          .string()
-          .optional()
-          .describe("Twitter user ID. One of user_id or username is required."),
-        username: z
-          .string()
-          .optional()
-          .describe("Twitter username. One of user_id or username is required."),
-      },
-      annotations: { readOnlyHint: true, openWorldHint: true },
-    },
-    async ({ user_id, username }) => {
-      const data = await client.request("reciprocal_followers", {
-        user_id,
-        username,
-      });
-      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
-    },
-  );
 }
