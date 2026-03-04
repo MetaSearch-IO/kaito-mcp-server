@@ -15,7 +15,7 @@ The following config works across most MCP clients (Claude Desktop, Cursor, Wind
   "mcpServers": {
     "kaito": {
       "command": "npx",
-      "args": ["-y", "kaito-mcp-server"],
+      "args": ["-y", "kaito-mcp-server@latest"],
       "env": {
         "KAITO_API_KEY": "your-api-key"
       }
@@ -38,7 +38,7 @@ Add the [standard config](#standard-configuration) to your `claude_desktop_confi
 ### Claude Code
 
 ```bash
-claude mcp add kaito -e KAITO_API_KEY=your-api-key -- npx -y kaito-mcp-server
+claude mcp add kaito -e KAITO_API_KEY=your-api-key -- npx -y kaito-mcp-server@latest
 ```
 
 ### VS Code
@@ -51,7 +51,7 @@ Add the following to your User Settings (JSON) or `.vscode/settings.json`:
     "servers": {
       "kaito": {
         "command": "npx",
-        "args": ["-y", "kaito-mcp-server"],
+        "args": ["-y", "kaito-mcp-server@latest"],
         "env": {
           "KAITO_API_KEY": "your-api-key"
         }
@@ -70,7 +70,7 @@ Go to **Cursor Settings → MCP → Add new MCP Server**, and paste the [standar
 For any MCP-compatible client, the server can be started with:
 
 ```bash
-KAITO_API_KEY=your-api-key npx -y kaito-mcp-server
+KAITO_API_KEY=your-api-key npx -y kaito-mcp-server@latest
 ```
 
 The transport is **stdio**. Use this command in your client's MCP server configuration.
