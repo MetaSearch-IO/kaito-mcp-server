@@ -139,7 +139,19 @@ npm install
 npm run build
 ```
 
-Test with the MCP Inspector:
+### Testing
+
+Smoke tests hit the real Kaito API to verify all endpoints are reachable:
+
+```bash
+KAITO_API_KEY=your-key npm test        # run all 18 smoke tests
+KAITO_API_KEY=your-key npm test -- -t "sentiment"  # run a single test
+KAITO_API_KEY=your-key npm test -- -t "Social"     # run a describe group
+```
+
+Resource tests (`tokens`, `narratives`) run without an API key; all others are skipped if `KAITO_API_KEY` is not set.
+
+### MCP Inspector
 
 ```bash
 KAITO_API_KEY=your-key npx @modelcontextprotocol/inspector node build/index.js
