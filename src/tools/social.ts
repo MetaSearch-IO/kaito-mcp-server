@@ -107,7 +107,7 @@ export function registerSocialTools(server: McpServer, client: KaitoClient) {
         duration: z
           .enum(["24h", "48h", "7d", "30d", "all_dates"])
           .optional()
-          .describe("Time window (default: 24h)"),
+          .describe("Time window (default: 30d)"),
         from: z
           .number()
           .optional()
@@ -147,40 +147,19 @@ export function registerSocialTools(server: McpServer, client: KaitoClient) {
       },
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
-    async ({
-      duration,
-      from,
-      sort_by,
-      sort_order,
-      filter_smart_followers_operator,
-      filter_smart_followers_value,
-      user_status,
-      user_tag_individual_or_organization,
-      user_type,
-      user_web3_relevance,
-    }) => {
-      const params: Record<string, string | undefined> = { duration, from: from?.toString() };
-
-      if (sort_by || sort_order) {
-        params.sort = JSON.stringify({
-          ...(sort_by && { sort_by }),
-          ...(sort_order && { sort_order }),
-        });
-      }
-
-      if (filter_smart_followers_operator || filter_smart_followers_value !== undefined) {
-        params.filter_smart_followers = JSON.stringify({
-          ...(filter_smart_followers_operator && { operator: filter_smart_followers_operator }),
-          ...(filter_smart_followers_value !== undefined && { value: filter_smart_followers_value }),
-        });
-      }
-
-      if (user_status) params.user_status = user_status;
-      if (user_tag_individual_or_organization) params.user_tag_individual_or_organization = user_tag_individual_or_organization;
-      if (user_type) params.user_type = user_type;
-      if (user_web3_relevance) params.user_web3_relevance = user_web3_relevance;
-
-      const data = await client.request("market_smart_following", params);
+    async ({ duration, from, sort_by, sort_order, filter_smart_followers_operator, filter_smart_followers_value, user_status, user_tag_individual_or_organization, user_type, user_web3_relevance }) => {
+      const data = await client.request("market_smart_following", {
+        duration,
+        from: from?.toString(),
+        sort_by,
+        sort_order,
+        filter_smart_followers_operator,
+        filter_smart_followers_value: filter_smart_followers_value?.toString(),
+        user_status,
+        user_tag_individual_or_organization,
+        user_type,
+        user_web3_relevance,
+      });
       return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
     },
   );
