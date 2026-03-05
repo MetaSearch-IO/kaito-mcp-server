@@ -1,6 +1,8 @@
 # kaito-mcp-server
 
 [![npm](https://img.shields.io/npm/v/kaito-mcp-server)](https://www.npmjs.com/package/kaito-mcp-server)
+[![CI](https://github.com/MetaSearch-IO/kaito-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/MetaSearch-IO/kaito-mcp-server/actions/workflows/ci.yml)
+[![license](https://img.shields.io/npm/l/kaito-mcp-server)](./LICENSE)
 
 MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides 16 tools, 2 resources, and 2 prompt templates for accessing Kaito's sentiment analysis, mindshare tracking, social intelligence, and more.
 
@@ -29,6 +31,8 @@ The following config works across most MCP clients (Claude Desktop, Cursor, Wind
 ### Claude Desktop (one-click)
 
 Download the latest [kaito-mcp-server.mcpb](https://github.com/MetaSearch-IO/kaito-mcp-server/releases/latest/download/kaito-mcp-server.mcpb) and open it — Claude Desktop will handle the rest.
+
+> **Note:** MCPB installs a pinned version and does not auto-update. To get the latest version, re-download the `.mcpb` from the latest release — or switch to the [standard configuration](#standard-configuration) which uses `@latest` to always pull the newest version.
 
 ### Claude Desktop (manual)
 
