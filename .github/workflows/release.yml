@@ -61,6 +61,12 @@ jobs:
       - if: steps.check.outputs.exists == 'false'
         run: npm run build
 
+      - name: Smoke tests
+        if: steps.check.outputs.exists == 'false'
+        run: npm test
+        env:
+          KAITO_API_KEY: ${{ secrets.KAITO_API_KEY }}
+
       - name: Pack MCPB bundle
         if: steps.check.outputs.exists == 'false'
         run: |
