@@ -80,11 +80,11 @@ export function registerSocialTools(server: McpServer, client: KaitoClient) {
         duration: z
           .enum(["24h", "48h", "7d", "30d", "3m", "6m", "12m", "all"])
           .optional()
-          .describe("Time window for mindshare calculation (default: 12m)"),
+          .describe("Time window (default: 24h)"),
         top_n: z
           .number()
           .optional()
-          .describe("Number of top KOLs to return (default: 100)"),
+          .describe("Number of top KOLs to return"),
       },
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
@@ -107,7 +107,7 @@ export function registerSocialTools(server: McpServer, client: KaitoClient) {
         duration: z
           .enum(["24h", "48h", "7d", "30d", "all_dates"])
           .optional()
-          .describe("Time window (default: 24h). all_dates starts from 2024-01-01"),
+          .describe("Time window (default: 30d)"),
         from: z
           .number()
           .optional()
@@ -135,7 +135,7 @@ export function registerSocialTools(server: McpServer, client: KaitoClient) {
         user_tag_individual_or_organization: z
           .enum(["Individual", "Organization", "all"])
           .optional()
-          .describe("Filter by account type (default: Organization)"),
+          .describe("Filter by account type"),
         user_type: z
           .enum(["kkol", "non_kkol", "all"])
           .optional()
