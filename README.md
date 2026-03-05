@@ -1,5 +1,7 @@
 # kaito-mcp-server
 
+[![npm](https://img.shields.io/npm/v/kaito-mcp-server)](https://www.npmjs.com/package/kaito-mcp-server)
+
 MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides 16 tools, 2 resources, and 2 prompt templates for accessing Kaito's sentiment analysis, mindshare tracking, social intelligence, and more.
 
 ## Getting Started
