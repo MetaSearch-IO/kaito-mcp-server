@@ -1,6 +1,6 @@
 # kaito-mcp-server
 
-MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides 12 tools, 2 resources, and 2 prompt templates for accessing Kaito's sentiment analysis, mindshare tracking, social intelligence, and more.
+MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides 16 tools, 2 resources, and 2 prompt templates for accessing Kaito's sentiment analysis, mindshare tracking, social intelligence, and more.
 
 ## Getting Started
 
@@ -99,12 +99,15 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 |------|-------------|
 | `kaito_smart_followers` | Smart follower count or list for a user |
 | `kaito_smart_following` | Latest 100 smart accounts followed by a user |
+| `kaito_kol_token_mindshare` | Top KOLs ranked by mindshare for a token |
+| `kaito_market_smart_following` | Accounts that smart followers have recently followed |
 
 ### Rankings
 
 | Tool | Description |
 |------|-------------|
 | `kaito_mindshare_arena` | Project rankings by mindshare (use `pre_tge=true` for Pre-TGE rankings) |
+| `kaito_mindshare_delta` | Top gainers and losers by mindshare change |
 
 ### Events
 
@@ -124,8 +127,8 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 
 | Prompt | Description |
 |--------|-------------|
-| `analyze_token` | Comprehensive token analysis workflow (sentiment → mindshare → mentions → engagement → events → search) |
-| `discover_trending` | Trending discovery workflow (mindshare arena → search) |
+| `analyze_token` | Comprehensive token analysis workflow (sentiment → mindshare → mentions → engagement → events → KOL mindshare → search) |
+| `discover_trending` | Trending discovery workflow (mindshare arena → delta movers → smart money signals → search) |
 
 ## Development
 

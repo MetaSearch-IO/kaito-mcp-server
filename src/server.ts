@@ -16,7 +16,7 @@ export function createServer(): McpServer {
 
   const client = new KaitoClient();
 
-  // 13 Tools
+  // 16 Tools
   registerMarketDataTools(server, client);
   registerSearchTools(server, client);
   registerSocialTools(server, client);

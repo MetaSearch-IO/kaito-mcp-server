@@ -69,4 +69,119 @@ export function registerSocialTools(server: McpServer, client: KaitoClient) {
       return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
     },
   );
+
+  server.registerTool(
+    "kaito_kol_token_mindshare",
+    {
+      description:
+        "Get top KOLs ranked by mindshare for a given token. Shows which key opinion leaders are driving the conversation around a specific project.",
+      inputSchema: {
+        token: z.string().describe("Token ticker (e.g. BTC, ETH)"),
+        duration: z
+          .enum(["24h", "48h", "7d", "30d", "3m", "6m", "12m", "all"])
+          .optional()
+          .describe("Time window (default: 24h)"),
+        top_n: z
+          .number()
+          .optional()
+          .describe("Number of top KOLs to return"),
+      },
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ token, duration, top_n }) => {
+      const data = await client.request("kol_token_mindshare", {
+        token,
+        duration,
+        top_n: top_n?.toString(),
+      });
+      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+    },
+  );
+
+  server.registerTool(
+    "kaito_market_smart_following",
+    {
+      description:
+        "Get accounts that smart followers have recently followed — a market-level social signal showing where smart money attention is flowing.",
+      inputSchema: {
+        duration: z
+          .enum(["24h", "48h", "7d", "30d", "all_dates"])
+          .optional()
+          .describe("Time window (default: 24h)"),
+        from: z
+          .number()
+          .optional()
+          .describe("Pagination offset"),
+        sort_by: z
+          .enum(["earliest_time", "smart_followers", "followers_change", "change_ratio"])
+          .optional()
+          .describe("Sort field"),
+        sort_order: z
+          .enum(["asc", "desc"])
+          .optional()
+          .describe("Sort direction"),
+        filter_smart_followers_operator: z
+          .enum(["gte", "lte"])
+          .optional()
+          .describe("Smart followers filter operator"),
+        filter_smart_followers_value: z
+          .number()
+          .optional()
+          .describe("Smart followers filter threshold"),
+        user_status: z
+          .enum(["new", "existing", "all"])
+          .optional()
+          .describe("Filter by user status"),
+        user_tag_individual_or_organization: z
+          .enum(["Individual", "Organization", "all"])
+          .optional()
+          .describe("Filter by account type"),
+        user_type: z
+          .enum(["kkol", "non_kkol", "all"])
+          .optional()
+          .describe("Filter by KOL status"),
+        user_web3_relevance: z
+          .enum(["relevant", "irrelevant"])
+          .optional()
+          .describe("Filter by web3 relevance"),
+      },
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({
+      duration,
+      from,
+      sort_by,
+      sort_order,
+      filter_smart_followers_operator,
+      filter_smart_followers_value,
+      user_status,
+      user_tag_individual_or_organization,
+      user_type,
+      user_web3_relevance,
+    }) => {
+      const params: Record<string, string | undefined> = { duration, from: from?.toString() };
+
+      if (sort_by || sort_order) {
+        params.sort = JSON.stringify({
+          ...(sort_by && { sort_by }),
+          ...(sort_order && { sort_order }),
+        });
+      }
+
+      if (filter_smart_followers_operator || filter_smart_followers_value !== undefined) {
+        params.filter_smart_followers = JSON.stringify({
+          ...(filter_smart_followers_operator && { operator: filter_smart_followers_operator }),
+          ...(filter_smart_followers_value !== undefined && { value: filter_smart_followers_value }),
+        });
+      }
+
+      if (user_status) params.user_status = user_status;
+      if (user_tag_individual_or_organization) params.user_tag_individual_or_organization = user_tag_individual_or_organization;
+      if (user_type) params.user_type = user_type;
+      if (user_web3_relevance) params.user_web3_relevance = user_web3_relevance;
+
+      const data = await client.request("market_smart_following", params);
+      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+    },
+  );
 }

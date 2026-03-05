@@ -80,6 +80,18 @@
     {
       "name": "kaito_tweet_engagement_info",
       "description": "Engagement details for a tweet"
+    },
+    {
+      "name": "kaito_kol_token_mindshare",
+      "description": "Top KOLs ranked by mindshare for a token"
+    },
+    {
+      "name": "kaito_market_smart_following",
+      "description": "Accounts that smart followers have recently followed"
+    },
+    {
+      "name": "kaito_mindshare_delta",
+      "description": "Top gainers and losers by mindshare change"
     }
   ],
   "compatibility": {

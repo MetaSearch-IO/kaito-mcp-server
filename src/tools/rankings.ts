@@ -54,4 +54,34 @@ export function registerRankingsTools(server: McpServer, client: KaitoClient) {
     },
   );
 
+  server.registerTool(
+    "kaito_mindshare_delta",
+    {
+      description:
+        "Get top gainers and losers by mindshare change over a time window. Use sort_type='desc' for biggest gainers, 'asc' for biggest losers.",
+      inputSchema: {
+        duration: z
+          .enum(["24h", "48h", "7d", "30d", "3m", "6m", "12m", "all"])
+          .optional()
+          .describe("Time window (default: 24h)"),
+        sort_type: z
+          .enum(["desc", "asc"])
+          .optional()
+          .describe("'desc' for gainers, 'asc' for losers (default: desc)"),
+        limit: z
+          .number()
+          .optional()
+          .describe("Number of results to return"),
+      },
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ duration, sort_type, limit }) => {
+      const data = await client.request("mindshare_delta", {
+        duration,
+        sort_type,
+        limit: limit?.toString(),
+      });
+      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+    },
+  );
 }

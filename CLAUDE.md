@@ -18,8 +18,8 @@ src/
 ├── tools/
 │   ├── market-data.ts   # sentiment, mindshare, narrative_mindshare, mentions, engagement
 │   ├── search.ts        # advanced_search
-│   ├── social.ts        # smart_followers, smart_following
-│   ├── rankings.ts      # mindshare_arena
+│   ├── social.ts        # smart_followers, smart_following, kol_token_mindshare, market_smart_following
+│   ├── rankings.ts      # mindshare_arena, mindshare_delta
 │   └── events.ts        # events, tweet_engagement_info
 ├── resources/
 │   └── reference.ts     # kaito://tokens, kaito://narratives (no auth)
