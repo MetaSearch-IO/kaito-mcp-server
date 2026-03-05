@@ -80,11 +80,11 @@ export function registerSocialTools(server: McpServer, client: KaitoClient) {
         duration: z
           .enum(["24h", "48h", "7d", "30d", "3m", "6m", "12m", "all"])
           .optional()
-          .describe("Time window (default: 24h)"),
+          .describe("Time window for mindshare calculation (default: 12m)."),
         top_n: z
           .number()
           .optional()
-          .describe("Number of top KOLs to return"),
+          .describe("Number of top KOLs to return (default: 100)."),
       },
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
@@ -107,43 +107,43 @@ export function registerSocialTools(server: McpServer, client: KaitoClient) {
         duration: z
           .enum(["24h", "48h", "7d", "30d", "all_dates"])
           .optional()
-          .describe("Time window (default: 30d)"),
+          .describe("Time range (default: 24h). all_dates covers from 2024-01-01."),
         from: z
           .number()
           .optional()
-          .describe("Pagination offset"),
+          .describe("Pagination offset (default: 0)."),
         sort_by: z
           .enum(["earliest_time", "smart_followers", "followers_change", "change_ratio"])
           .optional()
-          .describe("Sort field"),
+          .describe("Field to sort by (default sort direction is desc when sort_by is set)."),
         sort_order: z
           .enum(["asc", "desc"])
           .optional()
-          .describe("Sort direction"),
+          .describe("Sort direction (default: desc)."),
         filter_smart_followers_operator: z
           .enum(["gte", "lte"])
           .optional()
-          .describe("Smart followers filter operator"),
+          .describe("Filter operator for smart follower count: gte (≥) or lte (≤). Must be paired with filter_smart_followers_value."),
         filter_smart_followers_value: z
           .number()
           .optional()
-          .describe("Smart followers filter threshold"),
+          .describe("Integer threshold for smart follower count. Must be paired with filter_smart_followers_operator."),
         user_status: z
           .enum(["new", "existing", "all"])
           .optional()
-          .describe("Filter by user status"),
+          .describe("Filter by user status: new = first followed within selected duration (default: all)."),
         user_tag_individual_or_organization: z
           .enum(["Individual", "Organization", "all"])
           .optional()
-          .describe("Filter by account type"),
+          .describe("Filter by account type (default: Organization)."),
         user_type: z
           .enum(["kkol", "non_kkol", "all"])
           .optional()
-          .describe("Filter by KOL status"),
+          .describe("Filter by KOL classification: kkol = Kaito-classified KOLs only (default: all)."),
         user_web3_relevance: z
           .enum(["relevant", "irrelevant"])
           .optional()
-          .describe("Filter by web3 relevance"),
+          .describe("Filter by Web3 relevance (omit to include all)."),
       },
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
