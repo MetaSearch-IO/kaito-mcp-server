@@ -82,6 +82,10 @@
       "description": "Engagement details for a tweet"
     },
     {
+      "name": "kaito_get_twitter_user",
+      "description": "Twitter user profile metadata by user ID"
+    },
+    {
       "name": "kaito_kol_token_mindshare",
       "description": "Top KOLs ranked by mindshare for a token"
     },

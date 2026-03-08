@@ -4,7 +4,7 @@
 [![CI](https://github.com/MetaSearch-IO/kaito-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/MetaSearch-IO/kaito-mcp-server/actions/workflows/ci.yml)
 [![license](https://img.shields.io/npm/l/kaito-mcp-server)](./LICENSE)
 
-MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides 16 tools, 2 resources, and 2 prompt templates for accessing Kaito's sentiment analysis, mindshare tracking, social intelligence, and more.
+MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides 15 tools, 2 resources, and 2 prompt templates for accessing Kaito's sentiment analysis, mindshare tracking, social intelligence, and more.
 
 ## Getting Started
 
@@ -105,6 +105,7 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 |------|-------------|
 | `kaito_smart_followers` | Smart follower count or list for a user |
 | `kaito_smart_following` | Latest 100 smart accounts followed by a user |
+| `kaito_get_twitter_user` | Twitter user profile metadata by user ID |
 | `kaito_kol_token_mindshare` | Top KOLs ranked by mindshare for a token |
 | `kaito_market_smart_following` | Accounts that smart followers have recently followed |
 
@@ -150,7 +151,7 @@ npm run build
 Smoke tests hit the real Kaito API to verify all endpoints are reachable:
 
 ```bash
-KAITO_API_KEY=your-key npm test        # run all 18 smoke tests
+KAITO_API_KEY=your-key npm test        # run all 17 smoke tests
 KAITO_API_KEY=your-key npm test -- -t "sentiment"  # run a single test
 KAITO_API_KEY=your-key npm test -- -t "Social"     # run a describe group
 ```

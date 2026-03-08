@@ -71,6 +71,26 @@ export function registerSocialTools(server: McpServer, client: KaitoClient) {
   );
 
   server.registerTool(
+    "kaito_get_twitter_user",
+    {
+      description:
+        "Get Twitter user profile metadata by user ID, including display name, username, bio, profile image, follower stats, and account classification.",
+      inputSchema: {
+        user_id: z
+          .string()
+          .describe("Twitter user ID to look up (for example: 950486928784228352)."),
+      },
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ user_id }) => {
+      const data = await client.request("get_twitter_user", {
+        user_id,
+      });
+      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+    },
+  );
+
+  server.registerTool(
     "kaito_kol_token_mindshare",
     {
       description:
