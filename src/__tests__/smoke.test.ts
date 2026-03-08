@@ -67,6 +67,13 @@ describe.skipIf(!hasApiKey)("Social", () => {
     expect(result).toBeDefined();
   });
 
+  it("get_twitter_user", async () => {
+    const result = await client.request("get_twitter_user", {
+      user_id: "950486928784228352",
+    });
+    expect(result).toBeDefined();
+  });
+
   it("market_smart_following", async () => {
     const result = await client.request("market_smart_following", {});
     expect(result).toBeDefined();
