@@ -7,7 +7,7 @@ export function registerSearchTools(server: McpServer, client: KaitoClient) {
     "kaito_advanced_search",
     {
       description:
-        "Search ranked crypto feeds (Twitter & News) with AI summaries, sentiment scores, and extensive filters. Omit tokens/keyword/usernames for discovery mode (trending content). IMPORTANT: When the user specifies a time range (e.g. 'today', 'past week'), you MUST convert it to ISO 8601 timestamps and pass min_created_at / max_created_at accordingly. TIP: Leaving sort_by unset (defaults to relevance) usually gives the best results.",
+        "Search ranked crypto feeds (Twitter & News) with AI summaries, sentiment scores, and extensive filters. Omit tokens/keyword/usernames for discovery mode (trending content). IMPORTANT: When the user specifies a time range (e.g. 'today', 'past week'), you MUST convert it to ISO 8601 timestamps and pass min_created_at / max_created_at accordingly. TIP: Leaving sort_by unset (defaults to relevance) usually gives the best results. Twitter results include: url, author (username), author_user_id (Twitter user ID), text (AI summary), smart_engagement (int), kaito_smart_followers (int — author's Kaito smart follower count), engagement, sentiment_score, created_at.",
       inputSchema: {
         tokens: z
           .string()
