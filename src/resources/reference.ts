@@ -7,7 +7,7 @@ export function registerResources(server: McpServer, client: KaitoClient) {
     "kaito://tokens",
     {
       description:
-        "List of all supported token tickers on Kaito. Use these values for the 'token' parameter in market data tools.",
+        "List of all supported Kaito token values, symbols, and project names. Use the returned token value for token parameters in Kaito tools.",
       mimeType: "application/json",
     },
     async () => {

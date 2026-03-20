@@ -1,16 +1,17 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { KaitoClient } from "../client.js";
+import { NARRATIVE_GUIDANCE } from "../tool-guidance.js";
 
 export function registerNarrativeMindshareTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_narrative_mindshare",
     {
-      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://narratives and use a valid narrative ID from that resource for the narrative parameter. Never guess narrative IDs.
+      description: `${NARRATIVE_GUIDANCE}
 
-Get daily mindshare time series for a crypto narrative (e.g. AI, DeFi, L2). Use the narratives resource to find valid narrative IDs.
+Get daily mindshare time series for a crypto narrative (e.g. AI, DeFi, L2). Use kaito_narratives to find valid narrative IDs.
 
-IMPORTANT: Narrative IDs are case-sensitive and must match exactly. Mismatched casing (e.g. "ai" instead of "AI") returns a 400 error. Use the narratives resource for the authoritative list.
+IMPORTANT: Narrative IDs are case-sensitive and must match exactly. Mismatched casing (e.g. "ai" instead of "AI") returns a 400 error. Use kaito_narratives for the authoritative list.
 
 Common narrative IDs: AI, DeFi, L2, RWA, ZK, Meme, DePIN, SocialFi, Stablecoin, ETF, Halving, DA, LSD, LRT, GameFi, DeSci, Metaverse, Oracle, Rollups, BRC20, BTCL2, SVM, EVM, Pectra.
 Prefixed narrative IDs (use "Topic" prefix): TopicPerpDEX, TopicPrivacy, TopicRobotics, TopicBTCFi, TopicDeFAI, TopicFHE, TopicTEE, TopicInterops, TopicRune, TopicZKTLS, TopicPayFi, TopicDAT, Topicx402.
@@ -22,7 +23,7 @@ INTERPRETATION GUIDE:
 - Use the 30-day default for recent trend checks. For questions requiring historical context (baseline comparison, high/low/average, trend reversals), use a 12-month lookback.
 - Always compare current value to the period average — a single value alone is meaningless without context.`,
       inputSchema: {
-        narrative: z.string().describe("Narrative ID (e.g. AI, DeFi). See narratives resource."),
+        narrative: z.string().describe("Narrative ID (e.g. AI, DeFi). See kaito_narratives."),
         start_date: z
           .string()
           .optional()

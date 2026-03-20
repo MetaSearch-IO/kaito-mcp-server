@@ -1,14 +1,15 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { KaitoClient } from "../client.js";
+import { REQUIRED_TOKEN_GUIDANCE } from "../tool-guidance.js";
 
 export function registerSentimentTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_sentiment",
     {
-      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://tokens and use a valid token ticker from that resource for the token parameter. Never guess token values.
+      description: `${REQUIRED_TOKEN_GUIDANCE}
 
-Get daily sentiment time series for a crypto token. Returns volume-weighted bullish/bearish scores and notable events. Use the tokens resource to find valid tickers.
+Get daily sentiment time series for a crypto token. Returns volume-weighted bullish/bearish scores and notable events. Use kaito_tokens to find valid token values.
 
 INTERPRETATION GUIDE:
 - Sentiment is absolute (volume-weighted, not averaged by default). A project with 10x more volume will have a higher absolute score even at similar tone.
@@ -17,7 +18,7 @@ INTERPRETATION GUIDE:
 - Do NOT confuse sentiment_score (volume-weighted float for tone × volume) with smart_engagement (integer count of smart accounts that engaged). They measure completely different things.
 - Do NOT include price data in analysis unless explicitly asked.`,
       inputSchema: {
-        token: z.string().describe("Token ticker (e.g. BTC, ETH)"),
+        token: z.string().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         start_date: z
           .string()
           .optional()

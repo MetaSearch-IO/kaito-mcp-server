@@ -1,11 +1,8 @@
 #!/usr/bin/env node
 
-import { createRequire } from "node:module";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { CURRENT_VERSION } from "./package-metadata.js";
 import { createServer } from "./server.js";
-
-const require = createRequire(import.meta.url);
-const { version: CURRENT_VERSION } = require("../package.json");
 
 async function checkForUpdates() {
   try {

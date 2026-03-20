@@ -8,7 +8,11 @@ export function registerPrompts(server: McpServer) {
       description:
         "Comprehensive analysis of a crypto token: sentiment, mindshare, mentions, engagement, events, and recent news.",
       argsSchema: {
-        token: z.string().describe("Token ticker (e.g. BTC, ETH)"),
+        token: z
+          .string()
+          .describe(
+            "Project name, ticker, or resolved token value (e.g. Bitcoin, BTC, HYPERLIQUID)",
+          ),
         days: z
           .string()
           .optional()
@@ -25,13 +29,14 @@ export function registerPrompts(server: McpServer) {
               type: "text",
               text: `Perform a comprehensive analysis of the crypto token "${token}" over the last ${lookback} days. Follow these steps in order:
 
-1. **Sentiment**: Call kaito_sentiment for ${token} to understand market sentiment trends.
-2. **Mindshare**: Call kaito_mindshare for ${token} to see its share of crypto Twitter conversation.
-3. **Mentions**: Call kaito_mentions for ${token} to track mention volume across sources.
-4. **Engagement**: Call kaito_engagement for ${token} to measure total and smart engagement.
-5. **Events**: Call kaito_events for ${token} to find upcoming catalysts.
-6. **KOL Mindshare**: Call kaito_kol_token_mindshare for ${token} to see which KOLs are driving the conversation.
-7. **News & Discussion**: Call kaito_advanced_search with tokens=${token} to find the most relevant recent content.
+1. **Resolve Token**: Call kaito_tokens with query="${token}". Save the first returned token value as 'RESOLVED_TOKEN', and use 'RESOLVED_TOKEN' for all remaining token/tokens parameters.
+2. **Sentiment**: Call kaito_sentiment for 'RESOLVED_TOKEN' to understand market sentiment trends.
+3. **Mindshare**: Call kaito_mindshare for 'RESOLVED_TOKEN' to see its share of crypto Twitter conversation.
+4. **Mentions**: Call kaito_mentions for 'RESOLVED_TOKEN' to track mention volume across sources.
+5. **Engagement**: Call kaito_engagement for 'RESOLVED_TOKEN' to measure total and smart engagement.
+6. **Events**: Call kaito_events for 'RESOLVED_TOKEN' to find upcoming catalysts.
+7. **KOL Mindshare**: Call kaito_kol_token_mindshare for 'RESOLVED_TOKEN' to see which KOLs are driving the conversation.
+8. **News & Discussion**: Call kaito_advanced_search with tokens=RESOLVED_TOKEN to find the most relevant recent content.
 
 After gathering all data, provide a structured analysis covering:
 - Overall sentiment trend (bullish/bearish/neutral)
