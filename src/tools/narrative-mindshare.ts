@@ -6,7 +6,9 @@ export function registerNarrativeMindshareTool(server: McpServer, client: KaitoC
   server.registerTool(
     "kaito_narrative_mindshare",
     {
-      description: `Get daily mindshare time series for a crypto narrative (e.g. AI, DeFi, L2). Use the narratives resource to find valid narrative IDs.
+      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://narratives and use a valid narrative ID from that resource for the narrative parameter. Never guess narrative IDs.
+
+Get daily mindshare time series for a crypto narrative (e.g. AI, DeFi, L2). Use the narratives resource to find valid narrative IDs.
 
 IMPORTANT: Narrative IDs are case-sensitive and must match exactly. Mismatched casing (e.g. "ai" instead of "AI") returns a 400 error. Use the narratives resource for the authoritative list.
 

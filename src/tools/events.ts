@@ -6,7 +6,9 @@ export function registerEventsTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_events",
     {
-      description: `Get upcoming catalyst events for a token, with filtering by event type, source, and date range. Use the tokens resource to find valid tickers.
+      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://tokens and use a valid token ticker from that resource for the token parameter. Never guess token values.
+
+Get upcoming catalyst events for a token, with filtering by event type, source, and date range. Use the tokens resource to find valid tickers.
 
 INTERPRETATION GUIDE:
 - Events are upcoming catalysts (token unlocks, launches, governance votes, conferences) sourced from multiple platforms. They represent scheduled, forward-looking information — not historical data.

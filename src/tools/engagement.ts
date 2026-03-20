@@ -6,7 +6,9 @@ export function registerEngagementTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_engagement",
     {
-      description: `Get daily engagement metrics (total + smart/KOL engagement) for a token or keyword.
+      description: `TOOL CALLING: If you provide the token parameter, you MUST first read kaito://tokens and use a valid token ticker from that resource. Never guess token values.
+
+Get daily engagement metrics (total + smart/KOL engagement) for a token or keyword.
 
 INTERPRETATION GUIDE:
 - Engagement measures total interactions (likes, retweets, replies, quotes) plus a breakdown of smart/KOL engagement. Smart engagement specifically counts interactions from Kaito-classified smart accounts — a high smart-to-total ratio signals institutional interest.

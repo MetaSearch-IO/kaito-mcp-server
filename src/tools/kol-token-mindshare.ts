@@ -6,7 +6,9 @@ export function registerKolTokenMindshareTool(server: McpServer, client: KaitoCl
   server.registerTool(
     "kaito_kol_token_mindshare",
     {
-      description: `Get top KOLs ranked by mindshare for a given token. Shows which key opinion leaders are driving the conversation around a specific project.
+      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://tokens and use a valid token ticker from that resource for the token parameter. Never guess token values.
+
+Get top KOLs ranked by mindshare for a given token. Shows which key opinion leaders are driving the conversation around a specific project.
 
 INTERPRETATION GUIDE:
 - KOL token mindshare ranks individual key opinion leaders by their share of conversation about a specific token. Each result includes name, username, mindshare proportion, and rank.

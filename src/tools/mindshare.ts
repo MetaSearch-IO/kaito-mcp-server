@@ -6,7 +6,9 @@ export function registerMindshareTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_mindshare",
     {
-      description: `Get daily mindshare time series for a crypto token. Mindshare = proportion of crypto Twitter conversation about this token. Use the tokens resource to find valid tickers.
+      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://tokens and use a valid token ticker from that resource for the token parameter. Never guess token values.
+
+Get daily mindshare time series for a crypto token. Mindshare = proportion of crypto Twitter conversation about this token. Use the tokens resource to find valid tickers.
 
 INTERPRETATION GUIDE:
 - Mindshare is the percentage of total crypto Twitter conversation attributed to this token. Higher mindshare = more attention relative to the entire market. A token at 2% mindshare captures 2% of all crypto discussion.

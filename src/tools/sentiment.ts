@@ -6,7 +6,9 @@ export function registerSentimentTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_sentiment",
     {
-      description: `Get daily sentiment time series for a crypto token. Returns volume-weighted bullish/bearish scores and notable events. Use the tokens resource to find valid tickers.
+      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://tokens and use a valid token ticker from that resource for the token parameter. Never guess token values.
+
+Get daily sentiment time series for a crypto token. Returns volume-weighted bullish/bearish scores and notable events. Use the tokens resource to find valid tickers.
 
 INTERPRETATION GUIDE:
 - Sentiment is absolute (volume-weighted, not averaged by default). A project with 10x more volume will have a higher absolute score even at similar tone.

@@ -6,7 +6,9 @@ export function registerMentionsTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_mentions",
     {
-      description: `Get daily mention counts for a token or keyword, broken down by source (Twitter, Discord, News, etc.).
+      description: `TOOL CALLING: If you provide the token parameter, you MUST first read kaito://tokens and use a valid token ticker from that resource. Never guess token values.
+
+Get daily mention counts for a token or keyword, broken down by source (Twitter, Discord, News, etc.).
 
 INTERPRETATION GUIDE:
 - Mentions are raw counts of how many times a token or keyword appeared across sources (Twitter, Discord, News, etc.). Unlike sentiment or mindshare, mentions measure volume of discussion without weighting for tone or relative share.

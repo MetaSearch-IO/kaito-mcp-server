@@ -19,10 +19,19 @@ import { registerResources } from "./resources/reference.js";
 import { registerPrompts } from "./prompts/workflows.js";
 
 export function createServer(): McpServer {
-  const server = new McpServer({
-    name: "kaito",
-    version: "0.1.0",
-  });
+  const server = new McpServer(
+    {
+      name: "kaito",
+      version: "0.1.0",
+    },
+    {
+      instructions:
+        "When any tool requires a 'token' parameter, you MUST first read the kaito://tokens resource to obtain a valid token ticker before calling that tool. " +
+        "When any tool requires a 'tokens' parameter, you MUST first read the kaito://tokens resource to obtain valid token tickers before calling that tool. " +
+        "When any tool requires a 'narrative' parameter, you MUST first read the kaito://narratives resource to obtain a valid narrative ID before calling that tool. " +
+        "Never guess or assume token tickers or narrative IDs; always resolve them from the appropriate resource first.",
+    },
+  );
 
   const client = new KaitoClient();
 

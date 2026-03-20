@@ -6,9 +6,11 @@ export function registerAdvancedSearchTool(server: McpServer, client: KaitoClien
   server.registerTool(
     "kaito_advanced_search",
     {
-      description: `Search ranked crypto feeds (Twitter & News) with AI summaries, sentiment scores, and extensive filters.
+      description: `TOOL CALLING: If you provide the tokens parameter, you MUST first read kaito://tokens and use valid token tickers from that resource. Never guess token values.
 
-DISCOVERY MODE: Omit all tokens/query/keyword/usernames for unfiltered trending content — pure discovery feed ranked by relevance.
+Search ranked crypto feeds (Twitter & News) with AI summaries, sentiment scores, and extensive filters.
+
+DISCOVERY MODE: Omit all tokens/query/keyword/usernames for unfiltered trending content - pure discovery feed ranked by relevance.
 
 TIME RANGE: When the user specifies a time range (e.g. 'today', 'past week'), you MUST convert it to ISO 8601 timestamps and pass min_created_at / max_created_at accordingly.
 
