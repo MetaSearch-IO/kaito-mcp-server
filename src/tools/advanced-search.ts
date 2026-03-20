@@ -93,7 +93,7 @@ OUTPUT NOTES:
         size: z
           .number()
           .optional()
-          .describe("Results per page 50-100 (default: 100)"),
+          .describe("Results per page 20-50 (default: 50)"),
         languages: z
           .string()
           .optional()
@@ -190,7 +190,7 @@ OUTPUT NOTES:
           baseParams[key] = value.toString();
         }
       }
-      baseParams.size = Math.max(size ?? 100, 100).toString();
+      baseParams.size = Math.max(size ?? 50, 50).toString();
       baseParams.raw_text = "true";
       if (query !== undefined) baseParams.query = query;
 
