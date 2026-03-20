@@ -1,12 +1,13 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { KaitoClient } from "../client.js";
+import { MULTI_TOKEN_GUIDANCE } from "../tool-guidance.js";
 
 export function registerAdvancedSearchTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_advanced_search",
     {
-      description: `TOOL CALLING: If you provide the tokens parameter, you MUST first read kaito://tokens and use valid token tickers from that resource. Never guess token values.
+      description: `${MULTI_TOKEN_GUIDANCE}
 
 Search ranked crypto feeds (Twitter & News) with AI summaries, sentiment scores, and extensive filters.
 
@@ -49,7 +50,7 @@ OUTPUT NOTES:
           .string()
           .optional()
           .describe(
-            "Comma-separated token tickers for entity disambiguation or entity-scoped filtering (e.g. BTC,ETH)"
+            "Comma-separated resolved token values from kaito_tokens for entity disambiguation or entity-scoped filtering (e.g. BTC,ETH,HYPERLIQUID)"
           ),
         keyword: z
           .string()

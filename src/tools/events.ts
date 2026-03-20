@@ -1,14 +1,15 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { KaitoClient } from "../client.js";
+import { REQUIRED_TOKEN_GUIDANCE } from "../tool-guidance.js";
 
 export function registerEventsTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_events",
     {
-      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://tokens and use a valid token ticker from that resource for the token parameter. Never guess token values.
+      description: `${REQUIRED_TOKEN_GUIDANCE}
 
-Get upcoming catalyst events for a token, with filtering by event type, source, and date range. Use the tokens resource to find valid tickers.
+Get upcoming catalyst events for a token, with filtering by event type, source, and date range. Use kaito_tokens to find valid token values.
 
 INTERPRETATION GUIDE:
 - Events are upcoming catalysts (token unlocks, launches, governance votes, conferences) sourced from multiple platforms. They represent scheduled, forward-looking information — not historical data.
@@ -22,7 +23,7 @@ CATEGORIZE returned events by type:
 
 If no events found, say so explicitly — "No scheduled events found" is valid output. When investigating a specific time window, flag events that fall within or near it as potential catalysts.`,
       inputSchema: {
-        token: z.string().describe("Token ticker (e.g. BTC, ETH)"),
+        token: z.string().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         start_date: z
           .string()
           .optional()
