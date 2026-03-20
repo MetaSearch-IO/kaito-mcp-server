@@ -52,6 +52,12 @@ OUTPUT NOTES:
           .optional()
           .describe("Comma-separated token tickers (e.g. BTC,ETH)"),
         keyword: z.string().optional().describe("Search keyword"),
+        query: z
+          .string()
+          .optional()
+          .describe(
+            "Natural language search query for semantic search (e.g. 'latest news about Bitcoin ETF'). Automatically used as fallback when keyword search returns no results.",
+          ),
         usernames: z
           .string()
           .optional()
@@ -75,7 +81,7 @@ OUTPUT NOTES:
         size: z
           .number()
           .optional()
-          .describe("Results per page 1-20 (default: 20)"),
+          .describe("Results per page 50-100 (default: 100)"),
         languages: z
           .string()
           .optional()
@@ -83,7 +89,7 @@ OUTPUT NOTES:
         sort_by: z
           .enum(["relevance", "created_at", "engagement", "smart_engagement", "author", "length", "bookmark", "sentiment", "views"])
           .optional()
-          .describe("Sort field (default: relevance)"),
+          .describe("Sort field (default: relevance). NOTE: [smart_engagement, engagement, sentiment, bookmark, views, author (ict follower count ranking)] are only supported when sources=Twitter (not compatible with News)"),
         sort_order: z
           .enum(["asc", "desc"])
           .optional()
@@ -164,13 +170,20 @@ OUTPUT NOTES:
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
     async (params) => {
-      const queryParams: Record<string, string | undefined> = {};
-      for (const [key, value] of Object.entries(params)) {
+      const { query, size, ...rest } = params;
+
+      const baseParams: Record<string, string | undefined> = {};
+      for (const [key, value] of Object.entries(rest)) {
         if (value !== undefined) {
-          queryParams[key] = value.toString();
+          baseParams[key] = value.toString();
         }
       }
-      const data = await client.request("advanced_search", queryParams);
+      baseParams.size = Math.max(size ?? 100, 100).toString();
+      baseParams.raw_text = "true";
+      if (query !== undefined) baseParams.query = query;
+
+      const data = await client.request("advanced_search", baseParams);
+
       return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
     },
   );
