@@ -2,12 +2,25 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { KaitoClient } from "../client.js";
 
-export function registerEventsTools(server: McpServer, client: KaitoClient) {
+export function registerEventsTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_events",
     {
-      description:
-        "Get upcoming catalyst events for a token, with filtering by event type, source, and date range. Use the tokens resource to find valid tickers.",
+      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://tokens and use a valid token ticker from that resource for the token parameter. Never guess token values.
+
+Get upcoming catalyst events for a token, with filtering by event type, source, and date range. Use the tokens resource to find valid tickers.
+
+INTERPRETATION GUIDE:
+- Events are upcoming catalysts (token unlocks, launches, governance votes, conferences) sourced from multiple platforms. They represent scheduled, forward-looking information — not historical data.
+
+CATEGORIZE returned events by type:
+- Token unlocks = supply-side catalysts (dilution risk)
+- Mainnet/testnet releases = product milestones
+- Governance votes = protocol-level decisions (may be contentious)
+- Conference appearances = visibility events
+- Tokenomics updates = structural changes
+
+If no events found, say so explicitly — "No scheduled events found" is valid output. When investigating a specific time window, flag events that fall within or near it as potential catalysts.`,
       inputSchema: {
         token: z.string().describe("Token ticker (e.g. BTC, ETH)"),
         start_date: z
@@ -70,24 +83,6 @@ export function registerEventsTools(server: McpServer, client: KaitoClient) {
         sources,
         sort_by,
         sort_order,
-      });
-      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
-    },
-  );
-
-  server.registerTool(
-    "kaito_tweet_engagement_info",
-    {
-      description:
-        "Get detailed engagement metrics for a specific tweet including likes, retweets, replies, views, and smart engagement count.",
-      inputSchema: {
-        tweet_id: z.string().describe("Twitter tweet ID (numeric string)"),
-      },
-      annotations: { readOnlyHint: true, openWorldHint: true },
-    },
-    async ({ tweet_id }) => {
-      const data = await client.request("tweet_engagement_info", {
-        tweet_id,
       });
       return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
     },

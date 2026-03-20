@@ -1,0 +1,41 @@
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+import { KaitoClient } from "../client.js";
+
+export function registerKolTokenMindshareTool(server: McpServer, client: KaitoClient) {
+  server.registerTool(
+    "kaito_kol_token_mindshare",
+    {
+      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://tokens and use a valid token ticker from that resource for the token parameter. Never guess token values.
+
+Get top KOLs ranked by mindshare for a given token. Shows which key opinion leaders are driving the conversation around a specific project.
+
+INTERPRETATION GUIDE:
+- KOL token mindshare ranks individual key opinion leaders by their share of conversation about a specific token. Each result includes name, username, mindshare proportion, and rank.
+- Top KOLs are the primary narrative drivers for a token — their posts disproportionately shape market perception.
+- Cross-reference top KOLs with kaito_smart_followers to assess their credibility. A high-mindshare KOL with low smart followers may be high-volume but low-signal.
+- Default 12m shows long-term narrative drivers. Use 7d/30d to see who is driving the current conversation.
+- If all-zero data is returned for a ticker, retry with the full project name (e.g. HYPE → HYPERLIQUID). Some entities are indexed by name, not ticker.`,
+      inputSchema: {
+        token: z.string().describe("Token ticker (e.g. BTC, ETH)"),
+        duration: z
+          .enum(["24h", "48h", "7d", "30d", "3m", "6m", "12m", "all"])
+          .optional()
+          .describe("Time window for mindshare calculation (default: 12m)."),
+        top_n: z
+          .number()
+          .optional()
+          .describe("Number of top KOLs to return (default: 100)."),
+      },
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ token, duration, top_n }) => {
+      const data = await client.request("kol_token_mindshare", {
+        token,
+        duration,
+        top_n: top_n?.toString(),
+      });
+      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+    },
+  );
+}

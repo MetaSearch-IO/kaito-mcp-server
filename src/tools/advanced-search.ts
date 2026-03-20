@@ -2,23 +2,66 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { KaitoClient } from "../client.js";
 
-export function registerSearchTools(server: McpServer, client: KaitoClient) {
+export function registerAdvancedSearchTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_advanced_search",
     {
-      description:
-        "Search ranked crypto feeds (Twitter & News) with AI summaries, sentiment scores, and extensive filters. Omit tokens/keyword/usernames for discovery mode (trending content). IMPORTANT: When the user specifies a time range (e.g. 'today', 'past week'), you MUST convert it to ISO 8601 timestamps and pass min_created_at / max_created_at accordingly. TIP: Leaving sort_by unset (defaults to relevance) usually gives the best results.",
+      description: `TOOL CALLING: If you provide the tokens parameter, you MUST first read kaito://tokens and use valid token tickers from that resource. Never guess token values.
+
+Search ranked crypto feeds (Twitter & News) with AI summaries, sentiment scores, and extensive filters.
+
+DISCOVERY MODE: Omit all tokens/query/keyword/usernames for unfiltered trending content - pure discovery feed ranked by relevance.
+
+TIME RANGE: When the user specifies a time range (e.g. 'today', 'past week'), you MUST convert it to ISO 8601 timestamps and pass min_created_at / max_created_at accordingly.
+
+PRIMARY TEXT INPUT:
+- Use ONE main text field per call: either query or keyword.
+- query is the main user-facing field. Write it as a compact bag of 2-6 high-signal words or a short phrase cluster that should co-occur in relevant results.
+- keyword is kept for backward compatibility and can be used the same way as query.
+- The backend handles query and keyword on the same search path, so do NOT split intent across them. If both are present, keep them aligned.
+- Good style: entity + topic + event/action, e.g. "hyperliquid validator hack", "solana meme coin launch", "btc etf inflow".
+- Remove filler words, generic words like "crypto" or "news", and temporal phrases from query/keyword. Pass time with min_created_at / max_created_at instead.
+
+SEARCH BEHAVIOR — AND LOGIC:
+- Kaito ANDs all top-level fields together. More fields = fewer results. Adding parameters narrows, never broadens.
+- Use structured fields for tokens, usernames, sources, time, language, sentiment, and engagement thresholds instead of burying them in query/keyword.
+- Default to ONE main question, topic, or comparison frame per call.
+- It is OK to include multiple entities when they belong to the same frame, such as "Hyperliquid vs Lighter", "ETH vs SOL fees", or "BTC gold correlation".
+- Split into multiple searches only when the user is combining unrelated topics, time windows, or objectives in one request.
+- If a project name is ambiguous or a ticker exists, use tokens for disambiguation.
+- Do NOT rely on tokens alone for major tickers (BTC, ETH, SOL) when the user wants a specific topic. Pair tokens with query/keyword.
+
+QUERY CONSTRUCTION:
+- Start with the smallest high-signal query/keyword that captures the user intent.
+- Do NOT manually add long OR chains, synonym lists, plural variants, ticker variants, or handle variants by default. The backend already broadens recall through a secondary retrieval path.
+- Use quotes or explicit AND/OR/NOT only when the user explicitly wants exact phrase matching or literal boolean logic.
+- If results are sparse, relax the weakest qualifier or widen the time range instead of adding more terms.
+- Default to sort_by: relevance unless the user explicitly asks for recency or another ranking.
+- sentiment_type filters overall tweet sentiment, NOT sentiment about a specific token. Pair it with tokens when you need entity-scoped sentiment.
+
+OUTPUT NOTES:
+- smart_engagement is an integer (count of smart accounts that engaged) — NOT sentiment_score.
+- Always show smart_engagement (SE) and kaito_smart_followers (SF) for cited tweets.
+- author_user_id from results can be used with kaito_get_twitter_user for profile enrichment.
+- NEVER fabricate details beyond what the API returns. Attribute every claim to a specific result with URL.`,
       inputSchema: {
         tokens: z
           .string()
           .optional()
-          .describe("Comma-separated token tickers (e.g. BTC,ETH)"),
-        keyword: z.string().optional().describe("Search keyword"),
+          .describe(
+            "Comma-separated token tickers for entity disambiguation or entity-scoped filtering (e.g. BTC,ETH)"
+          ),
+        keyword: z
+          .string()
+          .optional()
+          .describe(
+            "Legacy-compatible primary text query. Use the same style as query: 2-6 high-signal words or a short phrase cluster."
+          ),
         query: z
           .string()
           .optional()
           .describe(
-            "Natural language search query for semantic search (e.g. 'latest news about Bitcoin ETF'). Automatically used as fallback when keyword search returns no results.",
+            "Primary user-facing text query. Use 2-6 high-signal words or a short phrase cluster (e.g. 'hyperliquid validator hack', 'btc etf inflow'). Avoid filler words and time expressions."
           ),
         usernames: z
           .string()
@@ -67,7 +110,7 @@ export function registerSearchTools(server: McpServer, client: KaitoClient) {
         sentiment_type: z
           .enum(["bullish", "bearish", "neutral"])
           .optional()
-          .describe("Twitter only: sentiment filter"),
+          .describe("Twitter only: sentiment filter. Filters on overall tweet sentiment, NOT sentiment about a specific token — pair with tokens param to scope."),
         author_type: z
           .enum(["Organization", "Individual"])
           .optional()
