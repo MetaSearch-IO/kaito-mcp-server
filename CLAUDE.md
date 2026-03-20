@@ -15,13 +15,17 @@ src/
 ├── index.ts          # Entry point — stdio transport
 ├── server.ts         # MCP server creation, registers all tools/resources/prompts
 ├── client.ts         # KaitoClient — centralized HTTP client (base: api.kaito.ai/api/v1)
-├── tools/               # One file per tool
+├── package-metadata.ts # Shared package-derived runtime metadata
+├── reference-search.ts # Shared token/narrative search and ranking helpers
+├── tool-guidance.ts    # Shared model-facing token/narrative lookup guidance
+├── tools/              # One file per tool group
 │   ├── sentiment.ts
 │   ├── mindshare.ts
 │   ├── narrative-mindshare.ts
 │   ├── mentions.ts
 │   ├── engagement.ts
 │   ├── advanced-search.ts
+│   ├── reference-lookup.ts
 │   ├── smart-followers.ts
 │   ├── smart-following.ts
 │   ├── get-twitter-user.ts
@@ -33,6 +37,10 @@ src/
 │   └── tweet-engagement-info.ts
 ├── resources/
 │   └── reference.ts     # kaito://tokens, kaito://narratives (no auth)
+├── __tests__/
+│   ├── smoke.test.ts
+│   ├── reference-search.test.ts
+│   └── server-consistency.test.ts
 └── prompts/
     └── workflows.ts     # analyze_token, discover_trending
 ```
@@ -77,5 +85,6 @@ What happens under the hood:
 - Tool inputs validated with Zod schemas
 - API auth via `KAITO_API_KEY` env var, passed as `x-api-key` header
 - Rate limit: 5 req/s
-- One tool per file in `src/tools/`
+- One tool or closely related tool group per file in `src/tools/`
+- Reference lookups are exposed both as MCP resources and as normal tools for clients that do not support `resources/read`
 - Adding a new tool: create a new `src/tools/<tool-name>.ts` file, register in `server.ts`, and add to `manifest.json` tools array

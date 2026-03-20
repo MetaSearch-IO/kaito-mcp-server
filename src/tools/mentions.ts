@@ -1,12 +1,13 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { KaitoClient } from "../client.js";
+import { OPTIONAL_TOKEN_GUIDANCE } from "../tool-guidance.js";
 
 export function registerMentionsTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_mentions",
     {
-      description: `TOOL CALLING: If you provide the token parameter, you MUST first read kaito://tokens and use a valid token ticker from that resource. Never guess token values.
+      description: `${OPTIONAL_TOKEN_GUIDANCE}
 
 Get daily mention counts for a token or keyword, broken down by source (Twitter, Discord, News, etc.).
 
@@ -18,7 +19,7 @@ INTERPRETATION GUIDE:
 - If no spikes found, say so explicitly — "No significant volume spikes detected" is valid output.
 - Cross-reference spikes with kaito_events to identify potential catalysts behind volume surges.`,
       inputSchema: {
-        token: z.string().optional().describe("Token ticker (e.g. BTC, ETH)"),
+        token: z.string().optional().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         keyword: z.string().optional().describe("Search keyword"),
         start_date: z
           .string()

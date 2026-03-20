@@ -1,14 +1,15 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { KaitoClient } from "../client.js";
+import { REQUIRED_TOKEN_GUIDANCE } from "../tool-guidance.js";
 
 export function registerMindshareTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_mindshare",
     {
-      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://tokens and use a valid token ticker from that resource for the token parameter. Never guess token values.
+      description: `${REQUIRED_TOKEN_GUIDANCE}
 
-Get daily mindshare time series for a crypto token. Mindshare = proportion of crypto Twitter conversation about this token. Use the tokens resource to find valid tickers.
+Get daily mindshare time series for a crypto token. Mindshare = proportion of crypto Twitter conversation about this token. Use kaito_tokens to find valid token values.
 
 INTERPRETATION GUIDE:
 - Mindshare is the percentage of total crypto Twitter conversation attributed to this token. Higher mindshare = more attention relative to the entire market. A token at 2% mindshare captures 2% of all crypto discussion.
@@ -18,7 +19,7 @@ INTERPRETATION GUIDE:
 - Always compare current value to the period average — a single value alone is meaningless without context.
 - Use kaito_mindshare_delta alongside this tool for a quick snapshot of recent change direction.`,
       inputSchema: {
-        token: z.string().describe("Token ticker (e.g. BTC, ETH)"),
+        token: z.string().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         start_date: z
           .string()
           .optional()

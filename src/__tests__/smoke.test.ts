@@ -1,7 +1,6 @@
-import { describe, it, expect, beforeAll, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { KaitoClient } from "../client.js";
 
-const SKIP_REASON = "KAITO_API_KEY not set";
 const hasApiKey = !!process.env.KAITO_API_KEY;
 
 const client = new KaitoClient();
