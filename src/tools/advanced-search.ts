@@ -36,11 +36,6 @@ SEARCH STRATEGY:
 - sentiment_type filters on overall tweet sentiment, NOT about a specific token — always pair with tokens param to scope sentiment to an entity.
 - Default to sort_by: relevance unless explicitly asked otherwise.
 
-PAGINATION:
-- Scale to query specificity: broad single-entity = 10 pages (200 results), moderate/themed = 5-7 pages, narrow comparison = 2-3 pages.
-- News: always 1 page (20 results) — high efficiency.
-- Make Twitter + News calls in parallel when both sources needed.
-
 OUTPUT NOTES:
 - smart_engagement is an integer (count of smart accounts that engaged) — NOT sentiment_score.
 - Always show smart_engagement (SE) and kaito_smart_followers (SF) for cited tweets.
