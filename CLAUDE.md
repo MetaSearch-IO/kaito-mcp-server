@@ -15,12 +15,22 @@ src/
 ├── index.ts          # Entry point — stdio transport
 ├── server.ts         # MCP server creation, registers all tools/resources/prompts
 ├── client.ts         # KaitoClient — centralized HTTP client (base: api.kaito.ai/api/v1)
-├── tools/
-│   ├── market-data.ts   # sentiment, mindshare, narrative_mindshare, mentions, engagement
-│   ├── search.ts        # advanced_search
-│   ├── social.ts        # smart_followers, smart_following, kol_token_mindshare, market_smart_following
-│   ├── rankings.ts      # mindshare_arena, mindshare_delta
-│   └── events.ts        # events, tweet_engagement_info
+├── tools/               # One file per tool
+│   ├── sentiment.ts
+│   ├── mindshare.ts
+│   ├── narrative-mindshare.ts
+│   ├── mentions.ts
+│   ├── engagement.ts
+│   ├── advanced-search.ts
+│   ├── smart-followers.ts
+│   ├── smart-following.ts
+│   ├── get-twitter-user.ts
+│   ├── kol-token-mindshare.ts
+│   ├── market-smart-following.ts
+│   ├── mindshare-arena.ts
+│   ├── mindshare-delta.ts
+│   ├── events.ts
+│   └── tweet-engagement-info.ts
 ├── resources/
 │   └── reference.ts     # kaito://tokens, kaito://narratives (no auth)
 └── prompts/
@@ -67,5 +77,5 @@ What happens under the hood:
 - Tool inputs validated with Zod schemas
 - API auth via `KAITO_API_KEY` env var, passed as `x-api-key` header
 - Rate limit: 5 req/s
-- Tool files are organized by domain (market-data, social, rankings, events, search)
-- Adding a new tool: define it in the appropriate `src/tools/*.ts` file, register in `server.ts`, and add to `manifest.json` tools array
+- One tool per file in `src/tools/`
+- Adding a new tool: create a new `src/tools/<tool-name>.ts` file, register in `server.ts`, and add to `manifest.json` tools array
