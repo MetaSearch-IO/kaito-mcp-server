@@ -51,7 +51,7 @@ OUTPUT NOTES:
           .string()
           .optional()
           .describe(
-            "Natural language search query for semantic search (e.g. 'latest news about Bitcoin ETF'). Automatically used as fallback when keyword search returns no results.",
+            "Search query for semantic search (e.g. 'Hyperliquid regulation'). Automatically used as fallback when keyword search returns no results. The query should contain specific phrases or terms."
           ),
         usernames: z
           .string()
