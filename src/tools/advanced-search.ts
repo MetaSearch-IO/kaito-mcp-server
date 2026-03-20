@@ -8,33 +8,34 @@ export function registerAdvancedSearchTool(server: McpServer, client: KaitoClien
     {
       description: `Search ranked crypto feeds (Twitter & News) with AI summaries, sentiment scores, and extensive filters.
 
-DISCOVERY MODE: Omit all tokens/keyword/usernames for unfiltered trending content — pure discovery feed ranked by relevance.
+DISCOVERY MODE: Omit all tokens/query/keyword/usernames for unfiltered trending content — pure discovery feed ranked by relevance.
 
 TIME RANGE: When the user specifies a time range (e.g. 'today', 'past week'), you MUST convert it to ISO 8601 timestamps and pass min_created_at / max_created_at accordingly.
 
+PRIMARY TEXT INPUT:
+- Use ONE main text field per call: either query or keyword.
+- query is the main user-facing field. Write it as a compact bag of 2-6 high-signal words or a short phrase cluster that should co-occur in relevant results.
+- keyword is kept for backward compatibility and can be used the same way as query.
+- The backend handles query and keyword on the same search path, so do NOT split intent across them. If both are present, keep them aligned.
+- Good style: entity + topic + event/action, e.g. "hyperliquid validator hack", "solana meme coin launch", "btc etf inflow".
+- Remove filler words, generic words like "crypto" or "news", and temporal phrases from query/keyword. Pass time with min_created_at / max_created_at instead.
+
 SEARCH BEHAVIOR — AND LOGIC:
 - Kaito ANDs all top-level fields together. More fields = fewer results. Adding parameters narrows, never broadens.
-- Default to ONE entity field per call. Avoid piling on tokens + keyword + topics unless you intentionally want a very narrow result set.
-- Prefer keyword over tokens as primary search — keyword has ~3.5x higher recall. Run a parallel tokens call as supplementary and merge results.
-- If tokens returns empty, the token may not be indexed — fall back to keyword immediately.
-- Do NOT use tokens alone for major tickers (BTC, ETH, SOL) — result set is too broad. Always pair with a keyword strategy.
+- Use structured fields for tokens, usernames, sources, time, language, sentiment, and engagement thresholds instead of burying them in query/keyword.
+- Default to ONE main question, topic, or comparison frame per call.
+- It is OK to include multiple entities when they belong to the same frame, such as "Hyperliquid vs Lighter", "ETH vs SOL fees", or "BTC gold correlation".
+- Split into multiple searches only when the user is combining unrelated topics, time windows, or objectives in one request.
+- If a project name is ambiguous or a ticker exists, use tokens for disambiguation.
+- Do NOT rely on tokens alone for major tickers (BTC, ETH, SOL) when the user wants a specific topic. Pair tokens with query/keyword.
 
-KEYWORD SYNTAX:
-- Plain unquoted keywords (e.g. "liquid staking") use analyzed AND matching — both terms must match but need not be adjacent. Phrase/proximity only boosts ranking.
-- "quoted phrase" = exact adjacent phrase match (hard constraint).
-- OR between variants of the SAME concept: "memecoin" OR "memecoins" OR "meme coin". OR must only broaden variants — never mix different concepts.
-- Spaces between OR-groups act as AND: "EntityA" OR "@handle" "topic" OR "topics" = (A OR handle) AND (topic OR topics).
-- #keyword# = case-sensitive match (useful for ambiguous tickers: #SOL# avoids "solution", #AI# avoids "said").
-- [keyword] = English-stemmed match ([staking] matches "staked", "stakes").
-- Precedence: AND binds tighter than OR.
-
-SEARCH STRATEGY:
-- Start with plain unquoted keyword, then tighten with explicit syntax only if needed.
-- OR-expand aggressively within each AND-group: include plurals, abbreviations, handles, ticker variants.
-- Common-word project names (Lighter, Drift, Pump): prefer tokens param for disambiguation via Kaito's entity linking.
-- For comparison queries: use dual-quoted terms like "Hyperliquid" "Lighter" to AND both names.
-- sentiment_type filters on overall tweet sentiment, NOT about a specific token — always pair with tokens param to scope sentiment to an entity.
-- Default to sort_by: relevance unless explicitly asked otherwise.
+QUERY CONSTRUCTION:
+- Start with the smallest high-signal query/keyword that captures the user intent.
+- Do NOT manually add long OR chains, synonym lists, plural variants, ticker variants, or handle variants by default. The backend already broadens recall through a secondary retrieval path.
+- Use quotes or explicit AND/OR/NOT only when the user explicitly wants exact phrase matching or literal boolean logic.
+- If results are sparse, relax the weakest qualifier or widen the time range instead of adding more terms.
+- Default to sort_by: relevance unless the user explicitly asks for recency or another ranking.
+- sentiment_type filters overall tweet sentiment, NOT sentiment about a specific token. Pair it with tokens when you need entity-scoped sentiment.
 
 OUTPUT NOTES:
 - smart_engagement is an integer (count of smart accounts that engaged) — NOT sentiment_score.
@@ -45,13 +46,20 @@ OUTPUT NOTES:
         tokens: z
           .string()
           .optional()
-          .describe("Comma-separated token tickers (e.g. BTC,ETH)"),
-        keyword: z.string().optional().describe("Search keyword"),
+          .describe(
+            "Comma-separated token tickers for entity disambiguation or entity-scoped filtering (e.g. BTC,ETH)"
+          ),
+        keyword: z
+          .string()
+          .optional()
+          .describe(
+            "Legacy-compatible primary text query. Use the same style as query: 2-6 high-signal words or a short phrase cluster."
+          ),
         query: z
           .string()
           .optional()
           .describe(
-            "Search query for semantic search (e.g. 'Hyperliquid regulation'). Automatically used as fallback when keyword search returns no results. The query should contain specific phrases or terms."
+            "Primary user-facing text query. Use 2-6 high-signal words or a short phrase cluster (e.g. 'hyperliquid validator hack', 'btc etf inflow'). Avoid filler words and time expressions."
           ),
         usernames: z
           .string()
