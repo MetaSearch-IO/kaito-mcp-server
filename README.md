@@ -136,14 +136,14 @@ These two tools exist specifically so clients that expose tools but not `resourc
 
 | Tool | Description |
 |------|-------------|
-| `kaito_smart_following` | Latest 100 smart accounts followed by a user |
-| `kaito_market_smart_following` | Accounts that smart followers have recently followed |
+| `kaito_smart_following` | Accounts that a particular smart person has recently followed |
+| `kaito_market_smart_following` | Accounts that smart people collectively have recently followed |
 
 ### Events & Catalysts
 
 | Tool | Description |
 |------|-------------|
-| `kaito_events` | Upcoming catalyst events for a token |
+| `kaito_events` | Upcoming catalyst and unlocks for a token |
 
 ## Resources
 
@@ -182,8 +182,8 @@ Smoke tests hit the real Kaito API to verify all endpoints are reachable:
 
 ```bash
 KAITO_API_KEY=your-key npm test
-KAITO_API_KEY=your-key npm test -- -t "sentiment"
-KAITO_API_KEY=your-key npm test -- -t "Social"
+KAITO_API_KEY=your-key npm test -- -t "Mindshare & Sentiment"
+KAITO_API_KEY=your-key npm test -- -t "KOL Analytics"
 ```
 
 Resource and reference-lookup tests run without an API key; authenticated endpoint checks are skipped if `KAITO_API_KEY` is not set.
