@@ -105,45 +105,45 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 
 These two tools exist specifically so clients that expose tools but not `resources/read` can still resolve valid token and narrative values before calling other Kaito tools.
 
-### Market Data
-
-| Tool | Description |
-|------|-------------|
-| `kaito_sentiment` | Daily sentiment time series for a token |
-| `kaito_mindshare` | Daily mindshare time series for a token |
-| `kaito_narrative_mindshare` | Daily mindshare for a crypto narrative |
-| `kaito_mentions` | Daily mention counts by source |
-| `kaito_engagement` | Daily engagement metrics (total + smart) |
-
-### Search
+### Search & Discovery
 
 | Tool | Description |
 |------|-------------|
 | `kaito_advanced_search` | Ranked crypto feeds with AI summaries and filters |
 
-### Social
+### Mindshare & Sentiment
+
+| Tool | Description |
+|------|-------------|
+| `kaito_mindshare` | Daily mindshare time series for a token |
+| `kaito_sentiment` | Daily sentiment time series for a token |
+| `kaito_narrative_mindshare` | Daily mindshare for a crypto narrative |
+| `kaito_mindshare_arena` | Project rankings by mindshare |
+| `kaito_mindshare_delta` | Top gainers and losers by mindshare change |
+| `kaito_tweet_engagement_info` | Engagement details for a specific tweet |
+| `kaito_mentions` | Daily mention counts by source |
+| `kaito_engagement` | Daily engagement metrics (total + smart) |
+
+### KOL Analytics
 
 | Tool | Description |
 |------|-------------|
 | `kaito_smart_followers` | Smart follower count or list for a user |
-| `kaito_smart_following` | Latest 100 smart accounts followed by a user |
 | `kaito_get_twitter_user` | Twitter user profile metadata by user ID |
 | `kaito_kol_token_mindshare` | Top KOLs ranked by mindshare for a token |
-| `kaito_market_smart_following` | Accounts that smart followers have recently followed |
 
-### Rankings
+### Smart Following
 
 | Tool | Description |
 |------|-------------|
-| `kaito_mindshare_arena` | Project rankings by mindshare (use `pre_tge=true` for Pre-TGE rankings) |
-| `kaito_mindshare_delta` | Top gainers and losers by mindshare change |
+| `kaito_smart_following` | Latest 100 smart accounts followed by a user |
+| `kaito_market_smart_following` | Accounts that smart followers have recently followed |
 
-### Events
+### Events & Catalysts
 
 | Tool | Description |
 |------|-------------|
 | `kaito_events` | Upcoming catalyst events for a token |
-| `kaito_tweet_engagement_info` | Engagement details for a specific tweet |
 
 ## Resources
 
