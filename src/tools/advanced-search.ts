@@ -14,12 +14,19 @@ DISCOVERY MODE: Omit all tokens/query/keyword/usernames for unfiltered trending 
 
 TIME RANGE: When the user specifies a time range (e.g. 'today', 'past week'), you MUST convert it to ISO 8601 timestamps and pass min_created_at / max_created_at accordingly.
 
+TOKENS vs QUERY — WHEN TO USE EACH:
+- When the user asks about a specific project and the token exists in kaito://tokens, prefer using tokens alone without query/keyword. The tokens parameter already scopes results to that entity.
+- Only add query/keyword when the user wants a specific subtopic (e.g. "monad staking" → tokens=MONAD, query="staking").
+- Do NOT repeat the project name in query when it is already in tokens — it adds noise without improving recall.
+- Do NOT add generic filler words like "blockchain", "crypto", "news", or "protocol" to query. These dilute search precision.
+- For major tickers (BTC, ETH, SOL) where the user wants a specific topic, pair tokens with query/keyword to narrow results. For a general feed on these tokens, tokens alone is still fine.
+
 PRIMARY TEXT INPUT:
 - Use ONE main text field per call: either query or keyword.
-- query is the main user-facing field. Write it as a compact bag of 2-6 high-signal words or a short phrase cluster that should co-occur in relevant results.
+- query is the main user-facing field. It can be 1-6 high-signal words or a short phrase cluster. A single word is fine. Omitting query entirely when tokens provides sufficient scoping is preferred.
 - keyword is kept for backward compatibility and can be used the same way as query.
 - The backend handles query and keyword on the same search path, so do NOT split intent across them. If both are present, keep them aligned.
-- Good style: entity + topic + event/action, e.g. "hyperliquid validator hack", "solana meme coin launch", "btc etf inflow".
+- Good style: "hyperliquid validator hack", "solana meme coin launch", "btc etf inflow", or just tokens=MONAD with no query for a general project feed.
 - Remove filler words, generic words like "crypto" or "news", and temporal phrases from query/keyword. Pass time with min_created_at / max_created_at instead.
 
 SEARCH BEHAVIOR — AND LOGIC:
@@ -29,10 +36,9 @@ SEARCH BEHAVIOR — AND LOGIC:
 - It is OK to include multiple entities when they belong to the same frame, such as "Hyperliquid vs Lighter", "ETH vs SOL fees", or "BTC gold correlation".
 - Split into multiple searches only when the user is combining unrelated topics, time windows, or objectives in one request.
 - If a project name is ambiguous or a ticker exists, use tokens for disambiguation.
-- Do NOT rely on tokens alone for major tickers (BTC, ETH, SOL) when the user wants a specific topic. Pair tokens with query/keyword.
 
 QUERY CONSTRUCTION:
-- Start with the smallest high-signal query/keyword that captures the user intent.
+- Start with the smallest high-signal query/keyword that captures the user intent. Often tokens alone with no query is the right call.
 - Do NOT manually add long OR chains, synonym lists, plural variants, ticker variants, or handle variants by default. The backend already broadens recall through a secondary retrieval path.
 - Use quotes or explicit AND/OR/NOT only when the user explicitly wants exact phrase matching or literal boolean logic.
 - If results are sparse, relax the weakest qualifier or widen the time range instead of adding more terms.
@@ -61,7 +67,7 @@ OUTPUT NOTES:
           .string()
           .optional()
           .describe(
-            "Primary user-facing text query. Use 2-6 high-signal words or a short phrase cluster (e.g. 'hyperliquid validator hack', 'btc etf inflow'). Avoid filler words and time expressions."
+            "Primary text query. Can be 1-6 high-signal words (e.g. 'validator hack', 'etf inflow'). Omit entirely when tokens alone is sufficient. Avoid filler words and time expressions."
           ),
         usernames: z
           .string()
