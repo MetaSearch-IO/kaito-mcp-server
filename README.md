@@ -4,7 +4,7 @@
 [![CI](https://github.com/MetaSearch-IO/kaito-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/MetaSearch-IO/kaito-mcp-server/actions/workflows/ci.yml)
 [![license](https://img.shields.io/npm/l/kaito-mcp-server)](./LICENSE)
 
-MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides 15 tools, 2 resources, and 2 prompt templates for accessing Kaito's sentiment analysis, mindshare tracking, social intelligence, and more.
+MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides crypto market intelligence tools, reference resources, and prompt templates for sentiment analysis, mindshare tracking, social intelligence, and more.
 
 ## Getting Started
 
@@ -27,6 +27,19 @@ The following config works across most MCP clients (Claude Desktop, Cursor, Wind
   }
 }
 ```
+
+This configuration runs the server over local **stdio** transport.
+
+### Claude.ai (web)
+
+The repository in its default form is a local `stdio` MCP server. That works with local MCP clients such as Claude Desktop, Claude Code, Cursor, and VS Code, but it does **not** make the server directly connectable from the Claude web app by itself.
+
+If you want to use this server in Claude web:
+
+- deploy it behind a remote HTTP MCP transport, then add it as a remote connector in Claude
+- or use Claude Desktop / another local MCP client instead
+
+Anthropic's current remote MCP support includes tools, prompts, and resources, but this repo ships as local `stdio` by default.
 
 ### Claude Desktop (one-click)
 
@@ -83,6 +96,15 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 
 ## Tools
 
+### Reference
+
+| Tool | Description |
+|------|-------------|
+| `kaito_tokens` | List or search supported token values, symbols, and project names |
+| `kaito_narratives` | List or search supported narrative IDs and display names |
+
+These two tools exist specifically so clients that expose tools but not `resources/read` can still resolve valid token and narrative values before calling other Kaito tools.
+
 ### Market Data
 
 | Tool | Description |
@@ -127,8 +149,16 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 
 | Resource | URI | Description |
 |----------|-----|-------------|
-| Tokens | `kaito://tokens` | All supported token tickers (no auth required) |
+| Tokens | `kaito://tokens` | All supported token values, symbols, and project names (no auth required) |
 | Narratives | `kaito://narratives` | All supported narrative IDs (no auth required) |
+
+Some MCP clients expose resources directly and some only expose tools. `kaito_tokens` and `kaito_narratives` provide the same reference data through normal tool calls, so token and narrative resolution still works even when `resources/read` is unavailable.
+
+Practical example:
+
+- if the user asks about "Hyperliquid", call `kaito_tokens` with `query="Hyperliquid"` first
+- use the returned `token` value such as `HYPERLIQUID` in downstream tools
+- keep `symbol` values such as `HYPE` as reference metadata, not as the canonical tool parameter unless that is also the returned token value
 
 ## Prompt Templates
 
@@ -151,12 +181,12 @@ npm run build
 Smoke tests hit the real Kaito API to verify all endpoints are reachable:
 
 ```bash
-KAITO_API_KEY=your-key npm test        # run all 17 smoke tests
-KAITO_API_KEY=your-key npm test -- -t "sentiment"  # run a single test
-KAITO_API_KEY=your-key npm test -- -t "Social"     # run a describe group
+KAITO_API_KEY=your-key npm test
+KAITO_API_KEY=your-key npm test -- -t "sentiment"
+KAITO_API_KEY=your-key npm test -- -t "Social"
 ```
 
-Resource tests (`tokens`, `narratives`) run without an API key; all others are skipped if `KAITO_API_KEY` is not set.
+Resource and reference-lookup tests run without an API key; authenticated endpoint checks are skipped if `KAITO_API_KEY` is not set.
 
 ### MCP Inspector
 

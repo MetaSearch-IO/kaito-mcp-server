@@ -1,12 +1,13 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { KaitoClient } from "../client.js";
+import { REQUIRED_TOKEN_GUIDANCE } from "../tool-guidance.js";
 
 export function registerKolTokenMindshareTool(server: McpServer, client: KaitoClient) {
   server.registerTool(
     "kaito_kol_token_mindshare",
     {
-      description: `TOOL CALLING: Before calling this tool, you MUST first read kaito://tokens and use a valid token ticker from that resource for the token parameter. Never guess token values.
+      description: `${REQUIRED_TOKEN_GUIDANCE}
 
 Get top KOLs ranked by mindshare for a given token. Shows which key opinion leaders are driving the conversation around a specific project.
 
@@ -17,7 +18,7 @@ INTERPRETATION GUIDE:
 - Default 12m shows long-term narrative drivers. Use 7d/30d to see who is driving the current conversation.
 - If all-zero data is returned for a ticker, retry with the full project name (e.g. HYPE → HYPERLIQUID). Some entities are indexed by name, not ticker.`,
       inputSchema: {
-        token: z.string().describe("Token ticker (e.g. BTC, ETH)"),
+        token: z.string().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         duration: z
           .enum(["24h", "48h", "7d", "30d", "3m", "6m", "12m", "all"])
           .optional()

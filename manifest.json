@@ -38,6 +38,14 @@
   },
   "tools": [
     {
+      "name": "kaito_tokens",
+      "description": "List or search supported token values, symbols, and project names"
+    },
+    {
+      "name": "kaito_narratives",
+      "description": "List or search supported narrative IDs and display names"
+    },
+    {
       "name": "kaito_sentiment",
       "description": "Daily sentiment time series for a token"
     },

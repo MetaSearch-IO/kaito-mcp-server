@@ -15,27 +15,30 @@ import { registerMindshareArenaTool } from "./tools/mindshare-arena.js";
 import { registerMindshareDeltaTool } from "./tools/mindshare-delta.js";
 import { registerEventsTool } from "./tools/events.js";
 import { registerTweetEngagementInfoTool } from "./tools/tweet-engagement-info.js";
+import { registerReferenceLookupTools } from "./tools/reference-lookup.js";
 import { registerResources } from "./resources/reference.js";
 import { registerPrompts } from "./prompts/workflows.js";
+import { CURRENT_VERSION, SERVER_NAME } from "./package-metadata.js";
 
 export function createServer(): McpServer {
   const server = new McpServer(
     {
-      name: "kaito",
-      version: "0.1.0",
+      name: SERVER_NAME,
+      version: CURRENT_VERSION,
     },
     {
       instructions:
-        "When any tool requires a 'token' parameter, you MUST first read the kaito://tokens resource to obtain a valid token ticker before calling that tool. " +
-        "When any tool requires a 'tokens' parameter, you MUST first read the kaito://tokens resource to obtain valid token tickers before calling that tool. " +
-        "When any tool requires a 'narrative' parameter, you MUST first read the kaito://narratives resource to obtain a valid narrative ID before calling that tool. " +
-        "Never guess or assume token tickers or narrative IDs; always resolve them from the appropriate resource first.",
+        "When any tool requires a 'token' parameter, you MUST first call kaito_tokens and use the returned token value before calling that tool. " +
+        "When any tool requires a 'tokens' parameter, you MUST first call kaito_tokens and use the returned token values joined by commas before calling that tool. " +
+        "When any tool requires a 'narrative' parameter, you MUST first call kaito_narratives and use the returned narrative value exactly as shown before calling that tool. " +
+        "If your MCP client supports resources, you may alternatively read kaito://tokens or kaito://narratives. Never guess or assume token values or narrative IDs.",
     },
   );
 
   const client = new KaitoClient();
 
-  // 15 Tools
+  // Tools
+  registerReferenceLookupTools(server, client);
   registerSentimentTool(server, client);
   registerMindshareTool(server, client);
   registerNarrativeMindshareTool(server, client);
@@ -52,10 +55,10 @@ export function createServer(): McpServer {
   registerEventsTool(server, client);
   registerTweetEngagementInfoTool(server, client);
 
-  // 2 Resources
+  // Resources
   registerResources(server, client);
 
-  // 2 Prompts
+  // Prompts
   registerPrompts(server);
 
   return server;
