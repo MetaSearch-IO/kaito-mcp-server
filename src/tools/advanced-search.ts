@@ -38,6 +38,11 @@ SEARCH BEHAVIOR — AND LOGIC:
 - Split into multiple searches only when the user is combining unrelated topics, time windows, or objectives in one request.
 - If a project name is ambiguous or a ticker exists, use tokens for disambiguation.
 
+SORT + SOURCE COMPATIBILITY:
+- sort_by values [smart_engagement, engagement, sentiment, bookmark, views, author] are ONLY valid when sources="Twitter". They will cause an API error if sources includes "News" (e.g. "Twitter,News" or "News").
+- When searching across both Twitter and News, you MUST use sort_by="relevance" (default) or sort_by="created_at". Any other sort_by will fail.
+- If you need smart_engagement ranking across both sources, run two separate calls: one for Twitter with sort_by="smart_engagement" and one for News with sort_by="relevance".
+
 QUERY CONSTRUCTION:
 - Start with the smallest high-signal query/keyword that captures the user intent. Often tokens alone with no query is the right call.
 - Do NOT manually add long OR chains, synonym lists, plural variants, ticker variants, or handle variants by default. The backend already broadens recall through a secondary retrieval path.

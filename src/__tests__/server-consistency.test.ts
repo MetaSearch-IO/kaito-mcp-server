@@ -4,6 +4,7 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CURRENT_VERSION, SERVER_NAME } from "../package-metadata.js";
 import { createServer } from "../server.js";
+import { SERVER_INSTRUCTIONS } from "../server-instructions.js";
 
 const require = createRequire(import.meta.url);
 const manifest = require("../../manifest.json") as {
@@ -86,8 +87,82 @@ describe("server consistency", () => {
     ]);
     expect(prompts.prompts.map((prompt) => prompt.name).sort()).toEqual([
       "analyze_token",
+      "daily_market_roundup",
       "discover_trending",
+      "social_listening",
+      "watchlist_portfolio",
     ]);
+  });
+
+  it("server instructions contain workflow routing and output format rules", () => {
+    const workflowNames = [
+      "analyze_token",
+      "discover_trending",
+      "daily_market_roundup",
+      "watchlist_portfolio",
+      "social_listening",
+    ];
+    for (const name of workflowNames) {
+      expect(SERVER_INSTRUCTIONS).toContain(name);
+    }
+
+    expect(SERVER_INSTRUCTIONS).toContain("Workflow Routing");
+    expect(SERVER_INSTRUCTIONS).toContain("Output Format");
+    expect(SERVER_INSTRUCTIONS).toContain("Answer first");
+    expect(SERVER_INSTRUCTIONS).toContain("kaito_tokens");
+  });
+});
+
+describe("prompts", () => {
+  it("daily_market_roundup returns a non-empty user message", async () => {
+    const { client } = await connectTestClient();
+
+    const result = await client.getPrompt({
+      name: "daily_market_roundup",
+      arguments: {},
+    });
+
+    expect(result.messages).toHaveLength(1);
+    expect(result.messages[0].role).toBe("user");
+    expect(result.messages[0].content).toMatchObject({
+      type: "text",
+      text: expect.stringContaining("daily market roundup"),
+    });
+  });
+
+  it("social_listening returns a prompt with token and default duration", async () => {
+    const { client } = await connectTestClient();
+
+    const result = await client.getPrompt({
+      name: "social_listening",
+      arguments: { token: "HYPERLIQUID" },
+    });
+
+    expect(result.messages).toHaveLength(1);
+    expect(result.messages[0].role).toBe("user");
+    expect(result.messages[0].content).toMatchObject({
+      type: "text",
+      text: expect.stringContaining("social listening"),
+    });
+    const text = (result.messages[0].content as { type: "text"; text: string }).text;
+    expect(text).toContain("HYPERLIQUID");
+    expect(text).toContain("24h");
+    expect(text).not.toContain("Competitor");
+  });
+
+  it("social_listening includes competitor block when competitors provided", async () => {
+    const { client } = await connectTestClient();
+
+    const result = await client.getPrompt({
+      name: "social_listening",
+      arguments: { token: "HYPERLIQUID", competitors: "DYDX,GMX", duration: "7d" },
+    });
+
+    const text = (result.messages[0].content as { type: "text"; text: string }).text;
+    expect(text).toContain("DYDX");
+    expect(text).toContain("GMX");
+    expect(text).toContain("7d");
+    expect(text).toContain("Competitor");
   });
 });
 

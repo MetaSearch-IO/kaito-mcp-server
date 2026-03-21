@@ -165,6 +165,7 @@ Practical example:
 | Prompt | Description |
 |--------|-------------|
 | `analyze_token` | Comprehensive token analysis workflow (sentiment → mindshare → mentions → engagement → events → KOL mindshare → search) |
+| `daily_market_roundup` | Daily roundup: top SE content → smart money movements with context → mindshare movers with drivers |
 | `discover_trending` | Trending discovery workflow (mindshare arena → delta movers → smart money signals → search) |
 
 ## Development
