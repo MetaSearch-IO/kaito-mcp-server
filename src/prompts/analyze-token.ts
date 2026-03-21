@@ -57,7 +57,7 @@ If Step 2 returns fewer than 10 results for the ${horizon} horizon, expand to th
 
 ## Phase 3 — Analysis & Output
 
-Synthesize all data into the following structured output.
+Synthesize all data into the following structured output. Do NOT use "smart money" — always say "smart accounts" instead.
 
 ### Answer
 This is the PRIMARY output — a comprehensive 2–3 paragraph response that directly and fully answers the user's question. Do NOT list categories or jump to bullet points here. Write in flowing prose as if briefing someone who will only read this section and skip everything below.

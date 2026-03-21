@@ -89,7 +89,7 @@ Once Step 8 returns, call kaito_smart_followers with mode="count" for each of th
 
 ## Phase 3 — Analysis & Output
 
-Synthesize all data into the following structured output:
+Synthesize all data into the following structured output. Do NOT use "smart money" — always say "smart accounts" instead:
 
 ### Answer
 This is the PRIMARY output — a comprehensive 2–3 paragraph response that directly tells the reader the social listening story for this token. Do NOT list categories or jump to bullet points here. Write in flowing prose as if briefing someone who will only read this section and skip everything below.
@@ -135,7 +135,7 @@ For the top 10 KOLs from kol_token_mindshare, provide:
 
 For new smart followers from Step 9:
 - List the top 5 by their own SF count
-- Note what these follows signal about institutional or smart money attention
+- Note what these follows signal about institutional or smart account attention
 
 ### Official Account Performance
 Using data from Step 10, analyze the project's own Twitter output:

@@ -68,7 +68,7 @@ Run ALL of the following calls in parallel across all confirmed tokens. Compute 
 
 When synthesizing, use the per-token tweets from Step 6 as the primary source. To identify the most important conversations across the entire portfolio, rank all tweets from all tokens by smart_engagement and surface the top ones in the Portfolio Insights section.
 
-Synthesize all data into the following structured output.
+Synthesize all data into the following structured output. Do NOT use "smart money" — always say "smart accounts" instead.
 
 ### Answer
 This is the PRIMARY output — a comprehensive 2–3 paragraph response that directly answers the user's question about their portfolio. Do NOT list categories or jump to bullet points here. Write in flowing prose as if briefing someone who will only read this section and skip everything below.
