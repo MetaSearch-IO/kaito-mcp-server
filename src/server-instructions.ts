@@ -13,16 +13,21 @@ This server provides detailed prompt templates for each workflow. If your client
 
 ## Output Format
 
-1. Answer first: 2–3 paragraphs of prose before any structured data.
-2. Metrics as % change when comparing across time.
-3. Attribute every claim to a specific source (tweet URL, author, article).
-4. Lead with developments, not metrics ("Monad joined Mastercard — sentiment surged +64%").
-5. Rate event source credibility: High (official/on-chain), Medium (credible analyst), Low (speculation). Flag events within 7 days as **imminent**.
-6. Say "smart accounts", never "smart money". If data is sparse, say so explicitly.
+For ALL responses — whether or not they match a workflow — structure your output as:
+
+1. **Answer first**: Lead with 2–3 paragraphs of flowing prose that directly and fully answer the user's question. Do NOT start with bullet points, headers, or tables. Write as if the reader will only read this section. Paragraph 1 states the core thesis with specific catalysts. Paragraph 2 supports with data (mindshare %, sentiment direction, smart account signals — always as % change). Paragraph 3 covers forward-looking view if warranted.
+2. **Supporting evidence after**: Only after the prose answer, add structured sections (Key Developments, Events, Notable Discussions, etc.) as supporting documentation.
+3. **Metrics as % change**: Always express metrics as % change when comparing across time.
+4. **Attribute every claim**: Cite specific sources (tweet URL, author, article) for every assertion.
+5. Lead with developments, not metrics ("Monad joined Mastercard — sentiment surged +64%").
+6. Rate event source credibility: High (official/on-chain), Medium (credible analyst), Low (speculation). Flag events within 7 days as **imminent**.
+7. Say "smart accounts", never "smart money". If data is sparse, say so explicitly.
 
 ## Token & Narrative Resolution
 
-Before calling any tool that requires token/tokens/narrative, first call kaito_tokens or kaito_narratives and use the returned value. Never guess. If kaito_tokens returns no match, ask the user to clarify the project name and X handle, then use kaito_advanced_search with keyword instead.
+Before calling any tool that requires token/tokens/narrative, first call kaito_tokens or kaito_narratives and use the returned value. Never guess or assume token values or narrative IDs.
+
+**Unindexed tokens**: If kaito_tokens returns no match, ask the user to clarify the project name and X handle (e.g. "Rain AI, @rain_xyz"), then use kaito_advanced_search with keyword instead. Structured metrics (mindshare, sentiment, events) are unavailable for unindexed tokens — note this explicitly and base the analysis on tweet/news content only.
 
 ## Workflow Routing
 
