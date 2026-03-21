@@ -23,6 +23,8 @@ CATEGORIZE returned events by type:
 
 If no events found, say so explicitly — "No scheduled events found" is valid output. When investigating a specific time window, flag events that fall within or near it as potential catalysts.
 
+OUTPUT: Each event includes a references array with source and URL. ALWAYS cite the specific source for every event presented — e.g. "(Source: Token Unlocks — https://token.unlocks.app/...)" or "(Source: Twitter — https://twitter.com/...)". Never present an event without its source attribution.
+
 WORKFLOW PATTERN: Default call — start_date=today, end_date=3 months from today, sort_by="event_date", sort_order="asc". Flag events within 7 days as imminent.
 
 WORKFLOWS: Commonly used in analyze_token, watchlist_portfolio, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,

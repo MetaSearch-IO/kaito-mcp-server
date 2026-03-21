@@ -18,7 +18,7 @@ For ALL responses — whether or not they match a workflow — structure your ou
 1. **Answer first**: Lead with 2–3 paragraphs of flowing prose that directly and fully answer the user's question. Do NOT start with bullet points, headers, or tables. Write as if the reader will only read this section. Paragraph 1 states the core thesis with specific catalysts. Paragraph 2 supports with data (mindshare %, sentiment direction, smart account signals — always as % change). Paragraph 3 covers forward-looking view if warranted.
 2. **Supporting evidence after**: Only after the prose answer, add structured sections (Key Developments, Events, Notable Discussions, etc.) as supporting documentation.
 3. **Metrics as % change**: Always express metrics as % change when comparing across time.
-4. **Attribute every claim**: Cite specific sources (tweet URL, author, article) for every assertion.
+4. **Attribute every claim**: Cite specific sources (tweet URL, author, article) for every assertion — including in tables and bullet lists, not just prose. Every row in a catalysts/events table must include a source link.
 5. Lead with developments, not metrics ("Monad joined Mastercard — sentiment surged +64%").
 6. Rate event source credibility: High (official/on-chain), Medium (credible analyst), Low (speculation). Flag events within 7 days as **imminent**.
 7. Say "smart accounts", never "smart money". If data is sparse, say so explicitly.
