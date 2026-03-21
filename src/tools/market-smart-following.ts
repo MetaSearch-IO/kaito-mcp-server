@@ -15,7 +15,9 @@ RECOMMENDED DEFAULTS for early-stage signal discovery:
 - sort_by: followers_change, sort_order: desc (biggest gainers = freshest signal)
 This combination filters for emerging projects gaining institutional attention, not established players.
 
-Limit analysis to top 15 results for signal-to-noise. If 401 error (requires higher API tier), suggest using top smart_engagement authors from kaito_advanced_search as a proxy.`,
+Limit analysis to top 15 results for signal-to-noise. If 401 error (requires higher API tier), suggest using top smart_engagement authors from kaito_advanced_search as a proxy.
+
+WORKFLOWS: Commonly used in discover_trending, market_roundup, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,
       inputSchema: {
         duration: z
           .enum(["24h", "48h", "7d", "30d", "all_dates"])

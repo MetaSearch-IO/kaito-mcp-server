@@ -16,7 +16,11 @@ INTERPRETATION GUIDE:
 - Always compare against the entity's own historical range rather than fixed thresholds. Each entity's baseline is different — an entity with baseline 0.3 at 0.5 is bullish; one with baseline 0.7 at 0.5 is bearish.
 - Use the 30-day default for recent trend checks. For questions requiring historical context (baseline comparison, high/low/average, trend reversals), use a 12-month lookback.
 - Do NOT confuse sentiment_score (volume-weighted float for tone × volume) with smart_engagement (integer count of smart accounts that engaged). They measure completely different things.
-- Do NOT include price data in analysis unless explicitly asked.`,
+- Do NOT include price data in analysis unless explicitly asked.
+
+WORKFLOW PATTERN: When used in analysis workflows, use 2x the analysis horizon for start_date so you can compare current vs prior period. Mapping: 24h → 2 days, 7d → 14 days, 30d → 60 days.
+
+WORKFLOWS: Commonly used in analyze_token, social_listening, watchlist_portfolio, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,
       inputSchema: {
         token: z.string().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         start_date: z

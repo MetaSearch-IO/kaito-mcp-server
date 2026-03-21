@@ -21,7 +21,11 @@ CATEGORIZE returned events by type:
 - Conference appearances = visibility events
 - Tokenomics updates = structural changes
 
-If no events found, say so explicitly — "No scheduled events found" is valid output. When investigating a specific time window, flag events that fall within or near it as potential catalysts.`,
+If no events found, say so explicitly — "No scheduled events found" is valid output. When investigating a specific time window, flag events that fall within or near it as potential catalysts.
+
+WORKFLOW PATTERN: Default call — start_date=today, end_date=3 months from today, sort_by="event_date", sort_order="asc". Flag events within 7 days as imminent.
+
+WORKFLOWS: Commonly used in analyze_token, watchlist_portfolio, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,
       inputSchema: {
         token: z.string().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         start_date: z

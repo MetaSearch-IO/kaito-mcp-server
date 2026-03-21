@@ -17,7 +17,11 @@ INTERPRETATION GUIDE:
 - Rank interpretation: Top 10 = dominant, Top 20 = strong, Top 50 = moderate, >50 = weak.
 - Use the 30-day default for recent trend checks. For questions requiring historical context (baseline comparison, high/low/average, structural shifts), use a 12-month lookback.
 - Always compare current value to the period average — a single value alone is meaningless without context.
-- Use kaito_mindshare_delta alongside this tool for a quick snapshot of recent change direction.`,
+- Use kaito_mindshare_delta alongside this tool for a quick snapshot of recent change direction.
+
+WORKFLOW PATTERN: When used in analysis workflows, use 2x the analysis horizon for start_date so you can compare current vs prior period. Mapping: 24h → 2 days, 7d → 14 days, 30d → 60 days.
+
+WORKFLOWS: Commonly used in analyze_token, social_listening, watchlist_portfolio, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,
       inputSchema: {
         token: z.string().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         start_date: z
