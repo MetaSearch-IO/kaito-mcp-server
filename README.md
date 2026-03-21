@@ -165,8 +165,10 @@ Practical example:
 | Prompt | Description |
 |--------|-------------|
 | `analyze_token` | Comprehensive token analysis workflow (sentiment → mindshare → mentions → engagement → events → KOL mindshare → search) |
-| `daily_market_roundup` | Daily roundup: top SE content → smart money movements with context → mindshare movers with drivers |
+| `market_roundup` | Priority-ranked briefing of top stories with smart account signals, mindshare movers, and catalysts |
 | `discover_trending` | Trending discovery workflow (mindshare arena → delta movers → smart money signals → search) |
+| `social_listening` | Surface key insights, identify tweets to respond to, and analyze key voices around a token with optional competitor comparison |
+| `watchlist_portfolio` | Monitor developments, upcoming catalysts, and key narratives across a set of tokens with mindshare and sentiment data |
 
 ## Development
 
