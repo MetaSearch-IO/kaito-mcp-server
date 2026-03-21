@@ -16,7 +16,11 @@ INTERPRETATION GUIDE:
 - Use the 30-day default for recent trend checks. For questions requiring historical context (baseline comparison, high/low/average, trend reversals), use a 12-month lookback.
 - Always compare current engagement to the period average — a single value alone is meaningless without context.
 - Spike detection: flag any day exceeding >2x the period average as a significant engagement spike. Note spike timing for cross-referencing with events or price moves.
-- Cross-reference spikes with kaito_events to identify potential catalysts behind engagement surges.`,
+- Cross-reference spikes with kaito_events to identify potential catalysts behind engagement surges.
+
+WORKFLOW PATTERN: When used in analysis workflows, use 2x the analysis horizon for start_date so you can compare current vs prior period. Mapping: 24h → 2 days, 7d → 14 days, 30d → 60 days.
+
+WORKFLOWS: Commonly used in social_listening, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,
       inputSchema: {
         token: z.string().optional().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         keyword: z.string().optional().describe("Search keyword"),

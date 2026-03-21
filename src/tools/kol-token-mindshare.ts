@@ -16,7 +16,9 @@ INTERPRETATION GUIDE:
 - Top KOLs are the primary narrative drivers for a token — their posts disproportionately shape market perception.
 - Cross-reference top KOLs with kaito_smart_followers to assess their credibility. A high-mindshare KOL with low smart followers may be high-volume but low-signal.
 - Default 12m shows long-term narrative drivers. Use 7d/30d to see who is driving the current conversation.
-- If all-zero data is returned for a ticker, retry with the full project name (e.g. HYPE → HYPERLIQUID). Some entities are indexed by name, not ticker.`,
+- If all-zero data is returned for a ticker, retry with the full project name (e.g. HYPE → HYPERLIQUID). Some entities are indexed by name, not ticker.
+
+WORKFLOWS: Commonly used in social_listening, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,
       inputSchema: {
         token: z.string().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         duration: z

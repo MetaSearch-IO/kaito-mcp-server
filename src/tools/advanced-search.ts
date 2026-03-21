@@ -55,7 +55,11 @@ OUTPUT NOTES:
 - smart_engagement is an integer (count of smart accounts that engaged) — NOT sentiment_score.
 - Always show smart_engagement (SE) and kaito_smart_followers (SF) for cited tweets.
 - author_user_id from results can be used with kaito_get_twitter_user for profile enrichment.
-- NEVER fabricate details beyond what the API returns. Attribute every claim to a specific result with URL.`,
+- NEVER fabricate details beyond what the API returns. Attribute every claim to a specific result with URL.
+
+WORKFLOW PATTERN: If fewer than 10 results are returned for the chosen time horizon, expand to the next tier (24h → 7d → 30d) and re-run that search only.
+
+WORKFLOWS: Commonly used in analyze_token, discover_trending, market_roundup, watchlist_portfolio, social_listening, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,
       inputSchema: {
         tokens: z
           .string()

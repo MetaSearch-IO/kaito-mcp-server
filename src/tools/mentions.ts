@@ -17,7 +17,11 @@ INTERPRETATION GUIDE:
 - Always compare current volume to the period average — a single value alone is meaningless without context.
 - Spike detection: flag any day exceeding >2x the period average as a significant volume spike. Note spike timing for cross-referencing with events or price moves.
 - If no spikes found, say so explicitly — "No significant volume spikes detected" is valid output.
-- Cross-reference spikes with kaito_events to identify potential catalysts behind volume surges.`,
+- Cross-reference spikes with kaito_events to identify potential catalysts behind volume surges.
+
+WORKFLOW PATTERN: When used in analysis workflows, use 2x the analysis horizon for start_date so you can compare current vs prior period. Mapping: 24h → 2 days, 7d → 14 days, 30d → 60 days.
+
+WORKFLOWS: Commonly used in social_listening, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,
       inputSchema: {
         token: z.string().optional().describe("Resolved token value from kaito_tokens (e.g. BTC, ETH, HYPERLIQUID)"),
         keyword: z.string().optional().describe("Search keyword"),

@@ -21,7 +21,9 @@ INTERPRETATION GUIDE:
 - Narrative mindshare is the percentage of total crypto Twitter conversation attributed to a narrative theme (e.g. AI, DeFi). It measures how much attention an entire category is receiving relative to the broader market.
 - Calculate % change (last day vs first day) to classify movement — Surging: >=+10%, Fading: <=-10%, Stable: within ±10%.
 - Use the 30-day default for recent trend checks. For questions requiring historical context (baseline comparison, high/low/average, trend reversals), use a 12-month lookback.
-- Always compare current value to the period average — a single value alone is meaningless without context.`,
+- Always compare current value to the period average — a single value alone is meaningless without context.
+
+WORKFLOWS: Commonly used in discover_trending, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,
       inputSchema: {
         narrative: z.string().describe("Narrative ID (e.g. AI, DeFi). See kaito_narratives."),
         start_date: z

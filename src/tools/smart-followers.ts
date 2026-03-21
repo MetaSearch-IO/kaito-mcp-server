@@ -15,7 +15,9 @@ Smart follower count is the PRIMARY credibility signal for any Twitter account. 
 - 50–300 = Emerging. Known in niches but not broadly established.
 - <50 = Low profile. Could be new, anon, or outside the smart network.
 
-'users' mode returns followers in recency order — top of list = newest followers. Flag any top-100 Kaito accounts as high-signal follows. Rank notable followers by their own SF count.`,
+'users' mode returns followers in recency order — top of list = newest followers. Flag any top-100 Kaito accounts as high-signal follows. Rank notable followers by their own SF count.
+
+WORKFLOWS: Commonly used in social_listening, among others. If a matching prompt template exists for your current workflow, call it for the full tool plan.`,
       inputSchema: {
         user_id: z
           .string()

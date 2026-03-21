@@ -87,8 +87,8 @@ describe("server consistency", () => {
     ]);
     expect(prompts.prompts.map((prompt) => prompt.name).sort()).toEqual([
       "analyze_token",
-      "daily_market_roundup",
       "discover_trending",
+      "market_roundup",
       "social_listening",
       "watchlist_portfolio",
     ]);
@@ -98,7 +98,7 @@ describe("server consistency", () => {
     const workflowNames = [
       "analyze_token",
       "discover_trending",
-      "daily_market_roundup",
+      "market_roundup",
       "watchlist_portfolio",
       "social_listening",
     ];
@@ -114,11 +114,11 @@ describe("server consistency", () => {
 });
 
 describe("prompts", () => {
-  it("daily_market_roundup returns a non-empty user message", async () => {
+  it("market_roundup returns a non-empty user message", async () => {
     const { client } = await connectTestClient();
 
     const result = await client.getPrompt({
-      name: "daily_market_roundup",
+      name: "market_roundup",
       arguments: {},
     });
 
@@ -126,7 +126,7 @@ describe("prompts", () => {
     expect(result.messages[0].role).toBe("user");
     expect(result.messages[0].content).toMatchObject({
       type: "text",
-      text: expect.stringContaining("daily market roundup"),
+      text: expect.stringContaining("market roundup"),
     });
   });
 
