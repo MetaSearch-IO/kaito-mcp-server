@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "kaito-mcp-server",
   "display_name": "Kaito AI",
-  "version": "0.2.15",
+  "version": "0.2.16",
   "description": "Crypto market intelligence from Kaito AI — sentiment, mindshare, social analytics, rankings, and more.",
   "author": {
     "name": "MetaSearch",
@@ -104,6 +104,14 @@
     {
       "name": "kaito_mindshare_delta",
       "description": "Top gainers and losers by mindshare change"
+    },
+    {
+      "name": "kaito_twitter_official_account",
+      "description": "Official and affiliate Twitter accounts for a token"
+    },
+    {
+      "name": "kaito_twitter_account_type",
+      "description": "Twitter account type classification, smart follower tier, and crypto role"
     }
   ],
   "compatibility": {

@@ -1,6 +1,7 @@
 import { McpError, ErrorCode } from "@modelcontextprotocol/sdk/types.js";
 
 const BASE_URL = "https://api.kaito.ai/api/v1";
+const INTERNAL_BASE_URL = "https://api.kaito.ai/api/internal";
 
 export class KaitoClient {
   private apiKey: string | undefined;
@@ -12,7 +13,7 @@ export class KaitoClient {
   async request(
     endpoint: string,
     params: Record<string, string | undefined>,
-    options?: { requireAuth?: boolean },
+    options?: { requireAuth?: boolean; internal?: boolean },
   ): Promise<unknown> {
     const requireAuth = options?.requireAuth ?? true;
 
@@ -23,7 +24,8 @@ export class KaitoClient {
       );
     }
 
-    const url = new URL(`${BASE_URL}/${endpoint}`);
+    const base = options?.internal ? INTERNAL_BASE_URL : BASE_URL;
+    const url = new URL(`${base}/${endpoint}`);
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined) {
         url.searchParams.set(key, value);
