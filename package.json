@@ -19,8 +19,7 @@
     "postversion": "node scripts/sync-manifest-version.js && git add manifest.json && git commit --amend --no-edit && git push"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.27.0",
-    "zod": "^3.23.0"
+    "@modelcontextprotocol/sdk": "^1.27.0"
   },
   "devDependencies": {
     "@types/node": "^22",
