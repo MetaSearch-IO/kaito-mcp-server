@@ -130,7 +130,9 @@ These two tools exist specifically so clients that expose tools but not `resourc
 |------|-------------|
 | `kaito_smart_followers` | Smart follower count or list for a user |
 | `kaito_get_twitter_user` | Twitter user profile metadata by user ID |
+| `kaito_twitter_account_type` | Twitter account type classification, smart follower tier, and crypto role |
 | `kaito_kol_token_mindshare` | Top KOLs ranked by mindshare for a token |
+| `kaito_twitter_official_account` | Official and affiliate Twitter accounts for a token |
 
 ### Smart Following
 

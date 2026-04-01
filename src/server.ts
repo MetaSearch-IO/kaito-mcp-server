@@ -15,6 +15,8 @@ import { registerMindshareArenaTool } from "./tools/mindshare-arena.js";
 import { registerMindshareDeltaTool } from "./tools/mindshare-delta.js";
 import { registerEventsTool } from "./tools/events.js";
 import { registerTweetEngagementInfoTool } from "./tools/tweet-engagement-info.js";
+import { registerTwitterOfficialAccountTool } from "./tools/twitter-official-account.js";
+import { registerTwitterAccountTypeTool } from "./tools/twitter-account-type.js";
 import { registerReferenceLookupTools } from "./tools/reference-lookup.js";
 import { registerResources } from "./resources/reference.js";
 import { registerPrompts } from "./prompts/workflows.js";
@@ -51,6 +53,8 @@ export function createServer(): McpServer {
   registerMindshareDeltaTool(server, client);
   registerEventsTool(server, client);
   registerTweetEngagementInfoTool(server, client);
+  registerTwitterOfficialAccountTool(server, client);
+  registerTwitterAccountTypeTool(server, client);
 
   // Resources
   registerResources(server, client);
