@@ -63,7 +63,7 @@ WORKFLOWS: Commonly used in analyze_token, social_listening, watchlist_portfolio
         average: average?.toString(),
         gaussian: gaussian?.toString(),
         language,
-        version: version ?? "3",
+        version,
       });
       return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
     },
