@@ -10,8 +10,6 @@ export function registerTwitterAccountTypeTool(server: McpServer, client: KaitoC
 
 RESPONSE FIELDS:
 - id, name, username, bio, icon: Basic profile metadata.
-- smart_followers: Number of smart followers.
-- tier: micro (<100), small (100–299), medium (300–999), large (1000–1999), mega (2000+).
 - role: Crypto primary role (e.g. Investigator, Developer, Investor). Empty string if not available.
 - individual_or_entity: "individual" (person) or "entity" (organization/project).
 
@@ -40,7 +38,8 @@ USE CASES:
         { user_id, username },
         { internal: true },
       );
-      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+      const { smart_followers, tier, ...rest } = data as Record<string, unknown>;
+      return { content: [{ type: "text", text: JSON.stringify(rest, null, 2) }] };
     },
   );
 }
