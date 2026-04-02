@@ -4,15 +4,35 @@
 [![CI](https://github.com/MetaSearch-IO/kaito-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/MetaSearch-IO/kaito-mcp-server/actions/workflows/ci.yml)
 [![license](https://img.shields.io/npm/l/kaito-mcp-server)](./LICENSE)
 
-MCP server for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides crypto market intelligence tools, reference resources, and prompt templates for sentiment analysis, mindshare tracking, social intelligence, and more.
+MCP proxy for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provides crypto market intelligence tools, reference resources, and prompt templates for sentiment analysis, mindshare tracking, social intelligence, and more.
 
 ## Getting Started
 
 All configurations require a [Kaito API key](https://kaito.ai). Set it as the `KAITO_API_KEY` environment variable.
 
-### Standard configuration
+### Option A: Direct HTTP (recommended)
 
-The following config works across most MCP clients (Claude Desktop, Cursor, Windsurf, etc.):
+For MCP clients that support remote HTTP servers (Claude.ai, Claude Desktop, Claude Code, etc.):
+
+```json
+{
+  "mcpServers": {
+    "kaito": {
+      "type": "http",
+      "url": "https://bff.kaito.ai/api/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+No local installation required.
+
+### Option B: npx (stdio proxy)
+
+For MCP clients that only support local stdio servers:
 
 ```json
 {
@@ -28,39 +48,34 @@ The following config works across most MCP clients (Claude Desktop, Cursor, Wind
 }
 ```
 
-This configuration runs the server over local **stdio** transport.
+This runs a thin local proxy that forwards all requests to the Kaito API over HTTP.
 
-### Claude.ai (web)
+### Client-specific setup
 
-The repository in its default form is a local `stdio` MCP server. That works with local MCP clients such as Claude Desktop, Claude Code, Cursor, and VS Code, but it does **not** make the server directly connectable from the Claude web app by itself.
+#### Claude.ai (web)
 
-If you want to use this server in Claude web:
+Use [Option A](#option-a-direct-http-recommended) — add it as a remote MCP connector in Claude settings.
 
-- deploy it behind a remote HTTP MCP transport, then add it as a remote connector in Claude
-- or use Claude Desktop / another local MCP client instead
-
-Anthropic's current remote MCP support includes tools, prompts, and resources, but this repo ships as local `stdio` by default.
-
-### Claude Desktop (one-click)
+#### Claude Desktop (one-click)
 
 Download the latest [kaito-mcp-server.mcpb](https://github.com/MetaSearch-IO/kaito-mcp-server/releases/latest/download/kaito-mcp-server.mcpb) and open it — Claude Desktop will handle the rest.
 
-> **Note:** MCPB installs a pinned version and does not auto-update. To get the latest version, re-download the `.mcpb` from the latest release — or switch to the [standard configuration](#standard-configuration) which uses `@latest` to always pull the newest version.
+> **Note:** MCPB installs a pinned version and does not auto-update. To get the latest version, re-download the `.mcpb` from the latest release — or switch to the [standard configuration](#option-b-npx-stdio-proxy) which uses `@latest` to always pull the newest version.
 
-### Claude Desktop (manual)
+#### Claude Desktop (manual)
 
-Add the [standard config](#standard-configuration) to your `claude_desktop_config.json`:
+Add [Option A](#option-a-direct-http-recommended) or [Option B](#option-b-npx-stdio-proxy) to your `claude_desktop_config.json`:
 
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
-### Claude Code
+#### Claude Code
 
 ```bash
 claude mcp add kaito -e KAITO_API_KEY=your-api-key -- npx -y kaito-mcp-server@latest
 ```
 
-### VS Code
+#### VS Code
 
 Add the following to your User Settings (JSON) or `.vscode/settings.json`:
 
@@ -80,11 +95,11 @@ Add the following to your User Settings (JSON) or `.vscode/settings.json`:
 }
 ```
 
-### Cursor
+#### Cursor
 
-Go to **Cursor Settings → MCP → Add new MCP Server**, and paste the [standard config](#standard-configuration).
+Go to **Cursor Settings → MCP → Add new MCP Server**, and paste [Option B](#option-b-npx-stdio-proxy).
 
-### Other MCP Clients
+#### Other MCP Clients
 
 For any MCP-compatible client, the server can be started with:
 
@@ -94,6 +109,13 @@ KAITO_API_KEY=your-api-key npx -y kaito-mcp-server@latest
 
 The transport is **stdio**. Use this command in your client's MCP server configuration.
 
+### Environment Variables
+
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `KAITO_API_KEY` | Yes | — | Your Kaito API key |
+| `KAITO_MCP_URL` | No | `https://bff.kaito.ai/api/mcp` | Override the remote MCP endpoint (e.g., for staging) |
+
 ## Tools
 
 ### Reference
@@ -102,8 +124,6 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 |------|-------------|
 | `kaito_tokens` | List or search supported token values, symbols, and project names |
 | `kaito_narratives` | List or search supported narrative IDs and display names |
-
-These two tools exist specifically so clients that expose tools but not `resources/read` can still resolve valid token and narrative values before calling other Kaito tools.
 
 ### Search & Discovery
 
@@ -154,14 +174,6 @@ These two tools exist specifically so clients that expose tools but not `resourc
 | Tokens | `kaito://tokens` | All supported token values, symbols, and project names (no auth required) |
 | Narratives | `kaito://narratives` | All supported narrative IDs (no auth required) |
 
-Some MCP clients expose resources directly and some only expose tools. `kaito_tokens` and `kaito_narratives` provide the same reference data through normal tool calls, so token and narrative resolution still works even when `resources/read` is unavailable.
-
-Practical example:
-
-- if the user asks about "Hyperliquid", call `kaito_tokens` with `query="Hyperliquid"` first
-- use the returned `token` value such as `HYPERLIQUID` in downstream tools
-- keep `symbol` values such as `HYPE` as reference metadata, not as the canonical tool parameter unless that is also the returned token value
-
 ## Prompt Templates
 
 | Prompt | Description |
@@ -183,15 +195,13 @@ npm run build
 
 ### Testing
 
-Smoke tests hit the real Kaito API to verify all endpoints are reachable:
+Integration tests hit the real Kaito API via the proxy:
 
 ```bash
 KAITO_API_KEY=your-key npm test
-KAITO_API_KEY=your-key npm test -- -t "Mindshare & Sentiment"
-KAITO_API_KEY=your-key npm test -- -t "KOL Analytics"
 ```
 
-Resource and reference-lookup tests run without an API key; authenticated endpoint checks are skipped if `KAITO_API_KEY` is not set.
+Tests are skipped if `KAITO_API_KEY` is not set.
 
 ### MCP Inspector
 
