@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 const ENTRY = resolve(import.meta.dirname, "../../build/index.js");
 const API_KEY = process.env.KAITO_API_KEY;
 const MCP_URL =
-  process.env.KAITO_MCP_URL ?? "https://dev-bff.kaito.ai/api/mcp";
+  process.env.KAITO_MCP_URL ?? "https://bff.kaito.ai/api/mcp";
 
 function shouldSkip(): boolean {
   return !API_KEY;
