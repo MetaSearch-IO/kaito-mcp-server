@@ -122,44 +122,39 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 
 | Tool | Description |
 |------|-------------|
-| `kaito_tokens` | List or search supported token values, symbols, and project names |
+| `kaito_entities` | List or search supported Kaito token identifiers, symbols, and project names |
 | `kaito_narratives` | List or search supported narrative IDs and display names |
 
 ### Search & Discovery
 
 | Tool | Description |
 |------|-------------|
-| `kaito_advanced_search` | Ranked crypto feeds with AI summaries and filters |
+| `kaito_search` | General-purpose natural-language Kaito search |
+| `kaito_feeds` | Structured top-content Kaito feed for discovery and monitoring |
+| `kaito_advanced_search` | Advanced structured Kaito search for highly specific retrieval |
 
-### Mindshare & Sentiment
-
-| Tool | Description |
-|------|-------------|
-| `kaito_mindshare` | Daily mindshare time series for a token |
-| `kaito_sentiment` | Daily sentiment time series for a token |
-| `kaito_narrative_mindshare` | Daily mindshare for a crypto narrative |
-| `kaito_mindshare_arena` | Project rankings by mindshare |
-| `kaito_mindshare_delta` | Top gainers and losers by mindshare change |
-| `kaito_tweet_engagement_info` | Engagement details for a specific tweet |
-| `kaito_mentions` | Daily mention counts by source |
-| `kaito_engagement` | Daily engagement metrics (total + smart) |
-
-### KOL Analytics
+### Sentiment, Mindshare & Engagement
 
 | Tool | Description |
 |------|-------------|
+| `kaito_tweet_engagement_info` | Detailed engagement metrics for a specific tweet |
+| `kaito_sentiment_entity` | Daily sentiment time series for a token |
+| `kaito_engagement` | Daily engagement metrics for a token or keyword |
+| `kaito_mentions` | Daily mention counts for a token or keyword |
+| `kaito_mindshare_entity` | Daily mindshare time series for a token |
+| `kaito_mindshare_entity_arena` | Project rankings by mindshare |
+| `kaito_mindshare_entity_delta` | Top gainers and losers by mindshare change |
+| `kaito_mindshare_narrative` | Daily mindshare for a crypto narrative |
+
+### Account & KOL Analytics
+
+| Tool | Description |
+|------|-------------|
+| `kaito_smart_following_market` | Accounts that smart followers have recently followed |
 | `kaito_smart_followers` | Smart follower count or list for a user |
-| `kaito_get_twitter_user` | Twitter user profile metadata by user ID |
-| `kaito_twitter_account_type` | Twitter account type classification, smart follower tier, and crypto role |
-| `kaito_kol_token_mindshare` | Top KOLs ranked by mindshare for a token |
-| `kaito_twitter_official_account` | Official and affiliate Twitter accounts for a token |
-
-### Smart Following
-
-| Tool | Description |
-|------|-------------|
-| `kaito_smart_following` | Accounts that a particular smart person has recently followed |
-| `kaito_market_smart_following` | Accounts that smart people collectively have recently followed |
+| `kaito_smart_following` | Latest smart accounts followed by a Twitter user |
+| `kaito_mindshare_entity_by_account` | Top KOLs ranked by mindshare for a token |
+| `kaito_twitter_user_metadata` | Twitter user profile metadata by user ID |
 
 ### Events & Catalysts
 

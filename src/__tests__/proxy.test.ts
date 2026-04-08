@@ -104,8 +104,39 @@ describe.skipIf(shouldSkip())("proxy integration", () => {
 
     // Verify known tools exist
     const toolNames = tools.map((t: any) => t.name);
-    expect(toolNames).toContain("kaito_entities");
-    expect(toolNames).toContain("kaito_advanced_search");
+    const currentToolNames = [
+      "kaito_entities",
+      "kaito_search",
+      "kaito_feeds",
+      "kaito_narratives",
+      "kaito_advanced_search",
+      "kaito_tweet_engagement_info",
+      "kaito_sentiment_entity",
+      "kaito_engagement",
+      "kaito_mentions",
+      "kaito_mindshare_entity",
+      "kaito_mindshare_entity_arena",
+      "kaito_mindshare_entity_delta",
+      "kaito_smart_following_market",
+      "kaito_smart_followers",
+      "kaito_smart_following",
+      "kaito_mindshare_entity_by_account",
+      "kaito_twitter_user_metadata",
+      "kaito_events",
+      "kaito_mindshare_narrative",
+    ];
+    currentToolNames.forEach((name) => {
+      expect(toolNames).toContain(name);
+    });
+
+    const removedToolNames = [
+      "kaito_get_twitter_user",
+      "kaito_twitter_account_type",
+      "kaito_twitter_official_account",
+    ];
+    removedToolNames.forEach((name) => {
+      expect(toolNames).not.toContain(name);
+    });
   });
 
   it("forwards tool calls to remote", async () => {

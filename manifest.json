@@ -38,36 +38,56 @@
   },
   "tools": [
     {
-      "name": "kaito_tokens",
-      "description": "List or search supported token values, symbols, and project names"
+      "name": "kaito_entities",
+      "description": "List or search supported Kaito token identifiers, symbols, and project names"
+    },
+    {
+      "name": "kaito_search",
+      "description": "General-purpose natural-language Kaito search"
+    },
+    {
+      "name": "kaito_feeds",
+      "description": "Structured top-content Kaito feed for discovery and monitoring"
     },
     {
       "name": "kaito_narratives",
       "description": "List or search supported narrative IDs and display names"
     },
     {
-      "name": "kaito_sentiment",
+      "name": "kaito_advanced_search",
+      "description": "Advanced structured Kaito search for highly specific retrieval"
+    },
+    {
+      "name": "kaito_tweet_engagement_info",
+      "description": "Detailed engagement metrics for a specific tweet"
+    },
+    {
+      "name": "kaito_sentiment_entity",
       "description": "Daily sentiment time series for a token"
     },
     {
-      "name": "kaito_mindshare",
-      "description": "Daily mindshare time series for a token"
-    },
-    {
-      "name": "kaito_narrative_mindshare",
-      "description": "Daily mindshare for a crypto narrative"
+      "name": "kaito_engagement",
+      "description": "Daily engagement metrics for a token or keyword"
     },
     {
       "name": "kaito_mentions",
-      "description": "Daily mention counts by source"
+      "description": "Daily mention counts for a token or keyword"
     },
     {
-      "name": "kaito_engagement",
-      "description": "Daily engagement metrics"
+      "name": "kaito_mindshare_entity",
+      "description": "Daily mindshare time series for a token"
     },
     {
-      "name": "kaito_advanced_search",
-      "description": "Ranked crypto feeds with AI summaries"
+      "name": "kaito_mindshare_entity_arena",
+      "description": "Project rankings by mindshare"
+    },
+    {
+      "name": "kaito_mindshare_entity_delta",
+      "description": "Top gainers and losers by mindshare change"
+    },
+    {
+      "name": "kaito_smart_following_market",
+      "description": "Accounts that smart followers have recently followed"
     },
     {
       "name": "kaito_smart_followers",
@@ -75,43 +95,23 @@
     },
     {
       "name": "kaito_smart_following",
-      "description": "Smart accounts followed by a user"
+      "description": "Latest smart accounts followed by a Twitter user"
     },
     {
-      "name": "kaito_mindshare_arena",
-      "description": "Project rankings by mindshare"
+      "name": "kaito_mindshare_entity_by_account",
+      "description": "Top KOLs ranked by mindshare for a token"
+    },
+    {
+      "name": "kaito_twitter_user_metadata",
+      "description": "Twitter user profile metadata by user ID"
     },
     {
       "name": "kaito_events",
       "description": "Upcoming catalyst events for a token"
     },
     {
-      "name": "kaito_tweet_engagement_info",
-      "description": "Engagement details for a tweet"
-    },
-    {
-      "name": "kaito_get_twitter_user",
-      "description": "Twitter user profile metadata by user ID"
-    },
-    {
-      "name": "kaito_kol_token_mindshare",
-      "description": "Top KOLs ranked by mindshare for a token"
-    },
-    {
-      "name": "kaito_market_smart_following",
-      "description": "Accounts that smart followers have recently followed"
-    },
-    {
-      "name": "kaito_mindshare_delta",
-      "description": "Top gainers and losers by mindshare change"
-    },
-    {
-      "name": "kaito_twitter_official_account",
-      "description": "Official and affiliate Twitter accounts for a token"
-    },
-    {
-      "name": "kaito_twitter_account_type",
-      "description": "Twitter account type classification, smart follower tier, and crypto role"
+      "name": "kaito_mindshare_narrative",
+      "description": "Daily mindshare for a crypto narrative"
     }
   ],
   "compatibility": {
