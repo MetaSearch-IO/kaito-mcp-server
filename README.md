@@ -122,45 +122,45 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 
 | Tool | Description |
 |------|-------------|
-| `kaito_entities` | List or search supported Kaito token identifiers, symbols, and project names |
-| `kaito_narratives` | List or search supported narrative IDs and display names |
+| `kaito_entities` | List or search supported Kaito token identifiers by project name, token value, symbol, or CoinGecko slug |
+| `kaito_narratives` | List or search supported Kaito narrative IDs by narrative code or display name |
 
 ### Search & Discovery
 
 | Tool | Description |
 |------|-------------|
-| `kaito_search` | General-purpose natural-language Kaito search |
-| `kaito_feeds` | Structured top-content Kaito feed for discovery and monitoring |
-| `kaito_advanced_search` | Advanced structured Kaito search for highly specific retrieval |
+| `kaito_search` | Default natural-language Kaito search for most user requests across Twitter, News, Research, and Podcast content |
+| `kaito_feeds` | Use this when you want the top ranked content feed for the whole market or scoped to a single resolved token, optionally within a time window. |
+| `kaito_advanced_search` | Power-user structured Kaito search with explicit control over tokens, usernames, sources, time filters, sorting, language, and thresholds |
 
 ### Sentiment, Mindshare & Engagement
 
 | Tool | Description |
 |------|-------------|
-| `kaito_tweet_engagement_info` | Detailed engagement metrics for a specific tweet |
-| `kaito_sentiment_entity` | Daily sentiment time series for a token |
-| `kaito_engagement` | Daily engagement metrics for a token or keyword |
-| `kaito_mentions` | Daily mention counts for a token or keyword |
-| `kaito_mindshare_entity` | Daily mindshare time series for a token |
-| `kaito_mindshare_entity_arena` | Project rankings by mindshare |
-| `kaito_mindshare_entity_delta` | Top gainers and losers by mindshare change |
-| `kaito_mindshare_narrative` | Daily mindshare for a crypto narrative |
+| `kaito_tweet_engagement_info` | Detailed engagement metrics for a specific tweet, including likes, retweets, replies, views, and smart engagement count |
+| `kaito_sentiment_entity` | Daily sentiment time series for a token, including volume-weighted bullish and bearish scores plus notable events |
+| `kaito_engagement` | Daily engagement metrics for a token or keyword, including total and smart/KOL engagement |
+| `kaito_mentions` | Daily mention counts for a token or keyword across Twitter, News, Podcast, and Research |
+| `kaito_mindshare_entity` | Daily mindshare time series for a token, showing its share of crypto Twitter conversation |
+| `kaito_mindshare_entity_arena` | Project rankings by mindshare score, with optional category and time window filters |
+| `kaito_mindshare_entity_delta` | Top gainers and losers by mindshare change over a selected time window |
+| `kaito_mindshare_narrative` | Daily mindshare time series for a crypto narrative |
 
 ### Account & KOL Analytics
 
 | Tool | Description |
 |------|-------------|
-| `kaito_smart_following_market` | Accounts that smart followers have recently followed |
-| `kaito_smart_followers` | Smart follower count or list for a user |
-| `kaito_smart_following` | Latest smart accounts followed by a Twitter user |
-| `kaito_mindshare_entity_by_account` | Top KOLs ranked by mindshare for a token |
-| `kaito_twitter_user_metadata` | Twitter user profile metadata by user ID |
+| `kaito_smart_following_market` | Market-level signal showing which accounts smart followers have recently followed |
+| `kaito_smart_followers` | Smart follower data for a Twitter user, including total smart follower count or gained followers for a specific date |
+| `kaito_smart_following` | Latest smart accounts followed by a Twitter user in reverse chronological order |
+| `kaito_mindshare_entity_by_account` | Top KOLs ranked by mindshare for a given token |
+| `kaito_twitter_user_metadata` | Twitter user profile metadata by user ID, including name, username, bio, follower stats, and account classification |
 
 ### Events & Catalysts
 
 | Tool | Description |
 |------|-------------|
-| `kaito_events` | Upcoming catalyst and unlocks for a token |
+| `kaito_events` | Upcoming catalyst events for a token, with filtering by event type, source, and date range |
 
 ## Resources
 

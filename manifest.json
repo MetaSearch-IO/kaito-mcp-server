@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "kaito-mcp-server",
   "display_name": "Kaito AI",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Crypto market intelligence from Kaito AI — sentiment, mindshare, social analytics, rankings, and more.",
   "author": {
     "name": "MetaSearch",
@@ -39,79 +39,79 @@
   "tools": [
     {
       "name": "kaito_entities",
-      "description": "List or search supported Kaito token identifiers, symbols, and project names"
+      "description": "List or search supported Kaito token identifiers by project name, token value, symbol, or CoinGecko slug"
     },
     {
       "name": "kaito_search",
-      "description": "General-purpose natural-language Kaito search"
+      "description": "Default natural-language Kaito search for most user requests across Twitter, News, Research, and Podcast content"
     },
     {
       "name": "kaito_feeds",
-      "description": "Structured top-content Kaito feed for discovery and monitoring"
+      "description": "Use this when you want the top ranked content feed for the whole market or scoped to a single resolved token, optionally within a time window."
     },
     {
       "name": "kaito_narratives",
-      "description": "List or search supported narrative IDs and display names"
+      "description": "List or search supported Kaito narrative IDs by narrative code or display name"
     },
     {
       "name": "kaito_advanced_search",
-      "description": "Advanced structured Kaito search for highly specific retrieval"
+      "description": "Power-user structured Kaito search with explicit control over tokens, usernames, sources, time filters, sorting, language, and thresholds"
     },
     {
       "name": "kaito_tweet_engagement_info",
-      "description": "Detailed engagement metrics for a specific tweet"
+      "description": "Detailed engagement metrics for a specific tweet, including likes, retweets, replies, views, and smart engagement count"
     },
     {
       "name": "kaito_sentiment_entity",
-      "description": "Daily sentiment time series for a token"
+      "description": "Daily sentiment time series for a token, including volume-weighted bullish and bearish scores plus notable events"
     },
     {
       "name": "kaito_engagement",
-      "description": "Daily engagement metrics for a token or keyword"
+      "description": "Daily engagement metrics for a token or keyword, including total and smart/KOL engagement"
     },
     {
       "name": "kaito_mentions",
-      "description": "Daily mention counts for a token or keyword"
+      "description": "Daily mention counts for a token or keyword across Twitter, News, Podcast, and Research"
     },
     {
       "name": "kaito_mindshare_entity",
-      "description": "Daily mindshare time series for a token"
+      "description": "Daily mindshare time series for a token, showing its share of crypto Twitter conversation"
     },
     {
       "name": "kaito_mindshare_entity_arena",
-      "description": "Project rankings by mindshare"
+      "description": "Project rankings by mindshare score, with optional category and time window filters"
     },
     {
       "name": "kaito_mindshare_entity_delta",
-      "description": "Top gainers and losers by mindshare change"
+      "description": "Top gainers and losers by mindshare change over a selected time window"
     },
     {
       "name": "kaito_smart_following_market",
-      "description": "Accounts that smart followers have recently followed"
+      "description": "Market-level signal showing which accounts smart followers have recently followed"
     },
     {
       "name": "kaito_smart_followers",
-      "description": "Smart follower data for a Twitter user"
+      "description": "Smart follower data for a Twitter user, including total smart follower count or gained followers for a specific date"
     },
     {
       "name": "kaito_smart_following",
-      "description": "Latest smart accounts followed by a Twitter user"
+      "description": "Latest smart accounts followed by a Twitter user in reverse chronological order"
     },
     {
       "name": "kaito_mindshare_entity_by_account",
-      "description": "Top KOLs ranked by mindshare for a token"
+      "description": "Top KOLs ranked by mindshare for a given token"
     },
     {
       "name": "kaito_twitter_user_metadata",
-      "description": "Twitter user profile metadata by user ID"
+      "description": "Twitter user profile metadata by user ID, including name, username, bio, follower stats, and account classification"
     },
     {
       "name": "kaito_events",
-      "description": "Upcoming catalyst events for a token"
+      "description": "Upcoming catalyst events for a token, with filtering by event type, source, and date range"
     },
     {
       "name": "kaito_mindshare_narrative",
-      "description": "Daily mindshare for a crypto narrative"
+      "description": "Daily mindshare time series for a crypto narrative"
     }
   ],
   "compatibility": {
