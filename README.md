@@ -116,6 +116,16 @@ The transport is **stdio**. Use this command in your client's MCP server configu
 | `KAITO_API_KEY` | Yes | — | Your Kaito API key |
 | `KAITO_MCP_URL` | No | `https://bff.kaito.ai/api/mcp` | Override the remote MCP endpoint (e.g., for staging) |
 
+## Recommended Skills
+
+Pair this MCP server with [kaito-skills](https://github.com/MetaSearch-IO/kaito-skills) — curated Agent Skills (social listening, mindshare pulse, etc.) that use the tools below. Works in Claude Code, Cursor, VS Code + Copilot, and 40+ other agents.
+
+```bash
+npx skills add MetaSearch-IO/kaito-skills
+```
+
+See the [kaito-skills README](https://github.com/MetaSearch-IO/kaito-skills#getting-started) for client-specific install commands.
+
 ## Tools
 
 ### Reference
