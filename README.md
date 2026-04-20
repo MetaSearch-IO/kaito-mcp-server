@@ -8,11 +8,11 @@ MCP proxy for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provi
 
 ## Getting Started
 
-All configurations require a [Kaito API key](https://kaito.ai). Set it as the `KAITO_API_KEY` environment variable.
+A Kaito API key is required. Get one from [Telegram](https://t.me/kaitoai2022) or email support@kaito.ai.
 
-### Option A: Direct HTTP (recommended)
+### Option A: Direct HTTP
 
-For MCP clients that support remote HTTP servers (Claude.ai, Claude Desktop, Claude Code, etc.):
+For MCP clients that support remote HTTP servers and let you set a static `Authorization` header (e.g., Claude Code):
 
 ```json
 {
@@ -29,6 +29,8 @@ For MCP clients that support remote HTTP servers (Claude.ai, Claude Desktop, Cla
 ```
 
 No local installation required.
+
+> **Note:** Clients whose remote-MCP UI is OAuth-only — including Claude Desktop's Custom Connectors and Claude.ai (web) — are **not compatible** with Kaito's static Bearer-token auth. Use Option B on those clients.
 
 ### Option B: npx (stdio proxy)
 
@@ -54,7 +56,7 @@ This runs a thin local proxy that forwards all requests to the Kaito API over HT
 
 #### Claude.ai (web)
 
-Use [Option A](#option-a-direct-http-recommended) — add it as a remote MCP connector in Claude settings.
+Not currently supported — Claude.ai web's Custom Connectors UI requires OAuth, but the Kaito API uses static Bearer tokens. Use [Claude Code](#claude-code) or Claude Desktop with [Option B](#option-b-npx-stdio-proxy) instead.
 
 #### Claude Desktop (one-click)
 
@@ -64,12 +66,26 @@ Download the latest [kaito-mcp-server.mcpb](https://github.com/MetaSearch-IO/kai
 
 #### Claude Desktop (manual)
 
-Add [Option A](#option-a-direct-http-recommended) or [Option B](#option-b-npx-stdio-proxy) to your `claude_desktop_config.json`:
+Add [Option B](#option-b-npx-stdio-proxy) to your `claude_desktop_config.json`:
 
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
+> **Note:** Option A (HTTP) is not supported here — `claude_desktop_config.json` only accepts stdio entries, and Claude Desktop's Settings → Connectors UI requires OAuth.
+
 #### Claude Code
+
+**HTTP (recommended):**
+
+```bash
+# If you previously used the npx setup, remove it first:
+claude mcp remove kaito
+
+# Then add the HTTP server:
+claude mcp add kaito --transport http https://bff.kaito.ai/api/mcp --header "Authorization: Bearer YOUR_API_KEY"
+```
+
+**stdio (alternative):**
 
 ```bash
 claude mcp add kaito -e KAITO_API_KEY=your-api-key -- npx -y kaito-mcp-server@latest
@@ -77,18 +93,34 @@ claude mcp add kaito -e KAITO_API_KEY=your-api-key -- npx -y kaito-mcp-server@la
 
 #### VS Code
 
-Add the following to your User Settings (JSON) or `.vscode/settings.json`:
+Add the following to `.vscode/mcp.json` (workspace) or your user-profile `mcp.json` (open via the **MCP: Open User Configuration** command).
+
+**HTTP (recommended):**
 
 ```json
 {
-  "mcp": {
-    "servers": {
-      "kaito": {
-        "command": "npx",
-        "args": ["-y", "kaito-mcp-server@latest"],
-        "env": {
-          "KAITO_API_KEY": "your-api-key"
-        }
+  "servers": {
+    "kaito": {
+      "type": "http",
+      "url": "https://bff.kaito.ai/api/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+**stdio (alternative):**
+
+```json
+{
+  "servers": {
+    "kaito": {
+      "command": "npx",
+      "args": ["-y", "kaito-mcp-server@latest"],
+      "env": {
+        "KAITO_API_KEY": "your-api-key"
       }
     }
   }
@@ -97,7 +129,24 @@ Add the following to your User Settings (JSON) or `.vscode/settings.json`:
 
 #### Cursor
 
-Go to **Cursor Settings → MCP → Add new MCP Server**, and paste [Option B](#option-b-npx-stdio-proxy).
+Add to `.cursor/mcp.json` (project) or `~/.cursor/mcp.json` (global).
+
+**HTTP (recommended):**
+
+```json
+{
+  "mcpServers": {
+    "kaito": {
+      "url": "https://bff.kaito.ai/api/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+**stdio (alternative):** paste [Option B](#option-b-npx-stdio-proxy).
 
 #### Other MCP Clients
 
