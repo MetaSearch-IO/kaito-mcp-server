@@ -8,7 +8,7 @@ MCP proxy for [Kaito AI](https://kaito.ai) crypto market intelligence API. Provi
 
 ## Getting Started
 
-All configurations require a [Kaito API key](https://kaito.ai). Set it as the `KAITO_API_KEY` environment variable.
+A Kaito API key is required. Contact us via [Telegram](https://t.me/kaitoai2022) or email support@kaito.ai to request one, discuss enterprise/external use cases, or get access to additional APIs beyond what this server exposes.
 
 ### Option A: Direct HTTP
 
